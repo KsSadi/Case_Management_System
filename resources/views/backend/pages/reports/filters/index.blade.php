@@ -1,0 +1,214 @@
+@section('page-title')
+    Create Project
+@endsection
+
+
+@extends('backend.layouts.main')
+
+@section('admin-section')
+
+    @include('backend.layouts.partials.alerts')
+
+
+    <div class="intro-y box mt-5">
+        <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
+            <h2 class="font-medium text-base mr-auto">
+Case Filtering
+            </h2>
+        </div>
+        <div class="p-5" id="horizontal-form">
+            <form  id="submit-form" method="POST">
+
+                <div>
+                    <label class="flex flex-col sm:flex-row" style="margin-bottom: 10px;">প্রজেক্টের নাম  </label>
+
+                        <select data-placeholder="Select" id="project"  name="project" class="select2 w-full">
+                            <option value="" selected>Select</option>
+                            @foreach($projects as $projects)
+
+                                <option value="{{ $projects->id }}"> {{ $projects->name }}</option>
+
+                            @endforeach
+
+                        </select>
+
+
+                </div>
+                <div class="mt-3">
+                    <label class="flex flex-col sm:flex-row"style="margin-bottom: 10px;">মামলার বিভাগ </label>
+
+                        <select data-placeholder="Select" id="division"  name="division" class="select2 w-full">
+                            <option value="" selected>Select</option>
+                            @foreach($divisions as $division)
+
+                                <option value="{{ $division->id }}"> {{ $division->name }}</option>
+
+                            @endforeach
+
+                        </select>
+
+                </div>
+                <div class="mt-3">
+                    <label class="flex flex-col sm:flex-row"style="margin-bottom: 10px;"> মামলার ধরন </label>
+
+                        <select data-placeholder="Select"  id="case_type"  name="case_type" class="select2 w-full">
+                            <option value="" selected>Select</option>
+                            @foreach($types as $type)
+
+                                <option value="{{ $type->id }}"> {{ $type->name }}</option>
+
+                            @endforeach
+
+                        </select>
+
+                </div>
+                <div class="mt-3">
+                    <label class="flex flex-col sm:flex-row"> বিচারাধীন বিজ্ঞ আদালতের নাম</label>
+
+                        <select data-placeholder="Select" id="court_name"   name="court_name" class="select2 w-full">
+                            <option value="" selected>Select</option>
+                            @foreach($courts as $court)
+
+                                <option value="{{ $court->id }}"> {{ $court->name }}</option>
+
+                            @endforeach
+
+                        </select>
+
+                </div>
+
+                <div class="mt-3">
+                    <label class="flex flex-col sm:flex-row"> কোম্পানির নিয়োজিত বিজ্ঞ আইনজীবীর নাম </label>
+
+                        <select data-placeholder="Select"  id="adv_name"  name="adv_name" class="select2 w-full">
+                            <option value="" selected>Select</option>
+                            @foreach($advocates as $advocate)
+
+                                <option value="{{ $advocate->id }}"> {{ $advocate->name }}</option>
+
+                            @endforeach
+
+                        </select>
+
+                </div>
+
+
+                <button type="submit" class="button bg-theme-1 text-white mt-5"   />  Search </button>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- Start : Datatable -->
+
+    <div class="intro-y datatable-wrapper box p-5 mt-5" id="date-range">
+
+
+
+        <table class="table table-report table-report--bordered display datatable w-full">
+            <thead>
+            <tr>
+
+                <th class="whitespace-no-wrap">ক্রঃ নং</th>
+                <th class="whitespace-no-wrap">মামলা নং</th>
+                <th class="whitespace-no-wrap">প্রজেক্টের নাম</th>
+                <th class="whitespace-no-wrap">মামলার বিভাগ</th>
+                <th class="whitespace-no-wrap">মামলার ধরন</th>
+                <th class="whitespace-no-wrap">বিচারাধীন বিজ্ঞ আদালতের নাম</th>
+                <th class="whitespace-no-wrap">কোম্পানির নিয়োজিত বিজ্ঞ আইনজীবীর নাম</th>
+                <th class="whitespace-no-wrap">পরবর্তী তারিখ </th>
+                <th class="text-center whitespace-no-wrap">ACTIONS</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+
+            @foreach($histories as $history)
+
+                <tr>
+
+
+                    <td>
+                        <span href="" class="font-medium">{{ $history->id }}</span>
+
+                    </td>
+                    <td>
+                        <a class="flex items-center mr-3" href="{{ route('dashboard.histories.show', $history->id) }}">
+                            <span href="" class="font-medium">@if($history->cases)
+                                    {{ $history->cases->case_no}}
+                                @else
+                                    Not Found
+                                @endif</span>
+                        </a>
+
+                    </td>
+                    <td>
+                        <span href="" class="font-medium">@if($history->cases)
+                                {{ $history->cases->projects->name}}
+                            @else
+                                Not Found
+                            @endif</span>
+
+                    </td>
+                    <td>
+                        <span href="" class="font-medium">@if($history->cases)
+                                {{ $history->cases->divisions->name}}
+                            @else
+                                Not Found
+                            @endif</span>
+
+                    </td>
+                    <td>
+                        <span href="" class="font-medium">@if($history->cases)
+                                {{ $history->cases->types->name }}
+                            @else
+                                Not Found
+                            @endif</span>
+
+                    </td>
+                    <td>
+                        <span href="" class="font-medium">@if($history->cases)
+                                {{ $history->cases->courts->name }}
+                            @else
+                                Not Found
+                            @endif</span>
+
+                    </td>
+                    <td>
+                        <span href="" class="font-medium"> @if($history->cases)
+                                {{ $history->cases->advocates->name }}
+                            @else
+                                Not Found
+                            @endif </span>
+
+                    </td>
+                    <td>
+                        <span href="" class="font-medium">{{ $history->next_date }}</span>
+
+                    </td>
+
+
+                    <td class="table-report__action w-56">
+                        <div class="flex justify-center items-center">
+                            <a class="flex items-center mr-3" href="{{ route('dashboard.histories.edit', $history->id) }}"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square w-4 h-4 mr-1"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> Edit </a>
+
+                            <a class="flex items-center text-theme-6" href="{{ route('dashboard.histories.destroy', $history->id) }}" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $history->id }}').submit()"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 w-4 h-4 mr-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg> Delete </a>
+                            <form id="delete-form-{{$history->id}}" action="{{ route('dashboard.histories.destroy', $history->id) }}" method="POST" style="display: none">
+                                @method('DELETE')
+                                @csrf
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+
+            @endforeach
+
+            </tbody>
+        </table>
+    </div>
+    <!-- END: Datatable -->
+
+
+
+@endsection
