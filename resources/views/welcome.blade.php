@@ -98,7 +98,7 @@
         <div>
             <div class="hero-badge"><span></span> Legal Case Management System</div>
             <h1>Manage Every <span>Legal Case</span> with Precision</h1>
-            <p>CasePro streamlines your entire legal workflow � from case filing to court scheduling, advocate tracking, and reporting � all in one powerful dashboard.</p>
+            <p>One platform to file cases, schedule hearings, manage advocates, and generate reports. Everything your legal team needs, organized and always within reach.</p>
             <div class="hero-actions">
                 <a href="{{ route('dashboard.login') }}" class="btn btn-white btn-lg">
                     <i class="fas fa-right-to-bracket"></i> Login to Dashboard
