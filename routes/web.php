@@ -1,5 +1,20 @@
 <?php
 
+use App\Http\Controllers\AdminAuth\AuthenticatedSessionController as AdminAuthSessionController;
+use App\Http\Controllers\admin\AdvocateController;
+use App\Http\Controllers\admin\CaseController;
+use App\Http\Controllers\admin\CaseDivisionController;
+use App\Http\Controllers\admin\CaseTypeController;
+use App\Http\Controllers\admin\CourtController;
+use App\Http\Controllers\admin\DateController;
+use App\Http\Controllers\admin\FilterController;
+use App\Http\Controllers\admin\HistoryController;
+use App\Http\Controllers\admin\MonthController;
+use App\Http\Controllers\admin\ProjectController;
+use App\Http\Controllers\AdminsController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RolesController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,40 +38,30 @@ Route::get('/dashboard_old', function () {
 })->middleware(['auth'])->name('dashboard_old');
 
 Route::group(['prefix' => 'dashboard'], function () {
-    Route::get('/', 'App\Http\Controllers\DashboardController@index')->name('dashboard');
-    Route::resource('roles', 'App\Http\Controllers\RolesController', ['names' => 'dashboard.roles']);
-    Route::resource('users', 'App\Http\Controllers\UsersController', ['names' => 'dashboard.users']);
-    Route::resource('admins', 'App\Http\Controllers\AdminsController', ['names' => 'dashboard.admins']);
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('roles', RolesController::class)->names('dashboard.roles');
+    Route::resource('users', UsersController::class)->names('dashboard.users');
+    Route::resource('admins', AdminsController::class)->names('dashboard.admins');
 
-    Route::get('/login', 'App\Http\Controllers\AdminAuth\AuthenticatedSessionController@showLoginForm')->name('dashboard.login');
-    Route::post('/login/submit', 'App\Http\Controllers\AdminAuth\AuthenticatedSessionController@login')->name('dashboard.login.submit');
+    Route::get('/login', [AdminAuthSessionController::class, 'showLoginForm'])->name('dashboard.login');
+    Route::post('/login/submit', [AdminAuthSessionController::class, 'login'])->name('dashboard.login.submit');
 
-    Route::post('/logout/submit', 'App\Http\Controllers\AdminAuth\AuthenticatedSessionController@logout')->name('dashboard.logout.submit');
-
-    // Route::get('/password/reset', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('dashboard.login');
-    // Route::post('/login/submit', 'App\Http\Controllers\Auth\LoginController@login')->name('dashboard.login.submit');
-
-    //Admin Modules
-    Route::resource('branches', 'App\Http\Controllers\admin\BranchController', ['names' => 'dashboard.branches']);
-    Route::resource('routes', 'App\Http\Controllers\admin\RouteController', ['names' => 'dashboard.routes']);
+    Route::post('/logout/submit', [AdminAuthSessionController::class, 'logout'])->name('dashboard.logout.submit');
 
     //Case
-    Route::resource('types', 'App\Http\Controllers\admin\CaseTypeController', ['names' => 'dashboard.types']);
-    Route::resource('divisions', 'App\Http\Controllers\admin\CaseDivisionController', ['names' => 'dashboard.divisions']);
-    Route::resource('courts', 'App\Http\Controllers\admin\CourtController', ['names' => 'dashboard.courts']);
-    Route::resource('cases', 'App\Http\Controllers\admin\CaseController', ['names' => 'dashboard.cases']);
-    Route::resource('projects', 'App\Http\Controllers\admin\ProjectController', ['names' => 'dashboard.projects']);
-    Route::resource('advocates', 'App\Http\Controllers\admin\AdvocateController', ['names' => 'dashboard.advocates']);
-    Route::resource('histories', 'App\Http\Controllers\admin\HistoryController', ['names' => 'dashboard.histories']);
+    Route::resource('types', CaseTypeController::class)->names('dashboard.types');
+    Route::resource('divisions', CaseDivisionController::class)->names('dashboard.divisions');
+    Route::resource('courts', CourtController::class)->names('dashboard.courts');
+    Route::resource('cases', CaseController::class)->names('dashboard.cases');
+    Route::resource('projects', ProjectController::class)->names('dashboard.projects');
+    Route::resource('advocates', AdvocateController::class)->names('dashboard.advocates');
+    Route::resource('histories', HistoryController::class)->names('dashboard.histories');
 
-    Route::resource('reports/filter', 'App\Http\Controllers\admin\FilterController', ['names' => 'dashboard.reports.filter']);
-    Route::resource('reports/date', 'App\Http\Controllers\admin\DateController', ['names' => 'dashboard.reports.date']);
-    Route::post('/reports/date', 'App\Http\Controllers\admin\DateController@DateRange')->name('dashboard.reports.date-range');
-    Route::get('/reports/month', 'App\Http\Controllers\admin\MonthController@index')->name('dashboard.reports.month');
-    Route::get('/reports/monthprevious', 'App\Http\Controllers\admin\MonthController@Previous')->name('dashboard.reports.monthprevious');
-
-
-
+    Route::resource('reports/filter', FilterController::class)->names('dashboard.reports.filter');
+    Route::resource('reports/date', DateController::class)->names('dashboard.reports.date');
+    Route::post('/reports/date', [DateController::class, 'DateRange'])->name('dashboard.reports.date-range');
+    Route::get('/reports/month', [MonthController::class, 'index'])->name('dashboard.reports.month');
+    Route::get('/reports/monthprevious', [MonthController::class, 'Previous'])->name('dashboard.reports.monthprevious');
 });
 
 require __DIR__ . '/auth.php';
