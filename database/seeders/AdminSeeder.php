@@ -15,12 +15,12 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        if (is_null(Admin::where('email', 'super@admin.com')->first())) {
+        if (is_null(Admin::where('email', 'ino@prathomik.com')->first())) {
             $admin = new Admin();
-            $admin->name = "Super Admin";
-            $admin->email = "super@admin.com";
-            $admin->username = "superadmin";
-            $admin->password = Hash::make('niamulhasan');
+            $admin->name = "Golam Kibria";
+            $admin->email = "ino@prathomik.com";
+            $admin->username = "kibria";
+            $admin->password = Hash::make('kibria@123');
             $admin->save();
             $admin->assignRole('god');
         }

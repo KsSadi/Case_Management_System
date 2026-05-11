@@ -30,6 +30,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    if (auth('admin')->check()) {
+        return redirect()->route('dashboard');
+    }
     return view('welcome');
 });
 
