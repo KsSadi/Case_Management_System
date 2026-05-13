@@ -14,20 +14,20 @@
     <!-- BEGIN: Datatable -->
 
 
-    <div class="intro-y datatable-wrapper box p-5 mt-5">
-
-        <table class="table table-report table-report--bordered display datatable w-full">
-            <thead>
-            <tr>
-
-                <th class="whitespace-no-wrap">ক্রঃ নং</th>
-                <th class="whitespace-no-wrap">মামলা নং</th>
-                <th class="whitespace-no-wrap">প্রজেক্টের নাম</th>
-                <th class="whitespace-no-wrap">মামলার বিভাগ</th>
-                <th class="whitespace-no-wrap">মামলার ধরন</th>
-                <th class="whitespace-no-wrap">বিচারাধীন বিজ্ঞ আদালতের নাম</th>
-                <th class="whitespace-no-wrap">কোম্পানির নিয়োজিত বিজ্ঞ আইনজীবীর নাম</th>
-                <th class="text-center whitespace-no-wrap">ACTIONS</th>
+    <div class="intro-y datatable-wrapper box p-3 md:p-5 mt-5" style="overflow: visible;">
+        <!-- Mobile Responsive: Horizontal scroll wrapper -->
+        <div class="overflow-x-auto" style="width: 100%; overflow-x: auto;">
+            <table class="table table-report table-report--bordered display datatable w-full" style="min-width: 600px;">
+                <thead>
+                <tr>
+                    <th class="whitespace-no-wrap">ক্রঃ নং</th>
+                    <th class="whitespace-no-wrap">মামলা নং</th>
+                    <th class="whitespace-no-wrap hidden md:table-cell">প্রজেক্টের নাম</th>
+                    <th class="whitespace-no-wrap hidden lg:table-cell">মামলার বিভাগ</th>
+                    <th class="whitespace-no-wrap hidden lg:table-cell">মামলার ধরন</th>
+                    <th class="whitespace-no-wrap hidden xl:table-cell">বিচারাধীন বিজ্ঞ আদালতের নাম</th>
+                    <th class="whitespace-no-wrap hidden md:table-cell">নিয়োজিত আইনজীবীর নাম</th>
+                    <th class="text-center whitespace-no-wrap">ACTIONS</th>
 
             </tr>
             </thead>
@@ -45,49 +45,43 @@
                     </td>
                     <td>
                         <a class="flex items-center mr-3" href="{{ route('dashboard.cases.show', $case->id) }}">
-                            <span href="" class="font-medium">{{ $case->case_no }}</span>
+                            <span class="font-medium">{{ $case->case_no }}</span>
                         </a>
-
                     </td>
-                    <td>
-                        <span href="" class="font-medium">@if($case->projects)
+                    <td class="hidden md:table-cell">
+                        <span class="font-medium">@if($case->projects)
                                 {{ $case->projects->name}}
                             @else
                                 Not Found
                             @endif</span>
-
                     </td>
-                    <td>
-                        <span href="" class="font-medium">@if($case->divisions)
+                    <td class="hidden lg:table-cell">
+                        <span class="font-medium">@if($case->divisions)
                                 {{ $case->divisions->name}}
                             @else
                                 Not Found
                             @endif</span>
-
                     </td>
-                    <td>
-                        <span href="" class="font-medium">@if($case->types)
+                    <td class="hidden lg:table-cell">
+                        <span class="font-medium">@if($case->types)
                                 {{ $case->types->name }}
                             @else
                                 Not Found
                             @endif</span>
-
                     </td>
-                    <td>
-                        <span href="" class="font-medium">@if($case->courts)
+                    <td class="hidden xl:table-cell">
+                        <span class="font-medium">@if($case->courts)
                                 {{ $case->courts->name }}
                             @else
                                 Not Found
                             @endif</span>
-
                     </td>
-                    <td>
-                        <span href="" class="font-medium"> @if($case->advocates)
+                    <td class="hidden md:table-cell">
+                        <span class="font-medium"> @if($case->advocates)
                                 {{ $case->advocates->name }}
                             @else
                                 Not Found
                             @endif </span>
-
                     </td>
 
 
@@ -108,6 +102,8 @@
 
             </tbody>
         </table>
+        </div>
+        <!-- End overflow wrapper -->
     </div>
     <!-- END: Datatable -->
 @endsection

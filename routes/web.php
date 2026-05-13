@@ -58,6 +58,7 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::resource('cases', CaseController::class)->names('dashboard.cases');
     Route::resource('projects', ProjectController::class)->names('dashboard.projects');
     Route::resource('advocates', AdvocateController::class)->names('dashboard.advocates');
+    Route::get('histories/old', [HistoryController::class, 'oldHistories'])->name('dashboard.histories.old');
     Route::resource('histories', HistoryController::class)->names('dashboard.histories');
 
     Route::resource('reports/filter', FilterController::class)->names('dashboard.reports.filter');

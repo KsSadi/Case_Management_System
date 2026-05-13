@@ -1,466 +1,276 @@
 <div class="mobile-menu md:hidden">
     <div class="mobile-menu-bar">
-        <a href="" class="flex mr-auto">
-            <img alt="Midone Tailwind HTML Admin Template" class="w-6" src="{{ asset('dashboard-assets/dist/images/logo.svg') }}">
+        <a href="{{ route('dashboard') }}" class="flex mr-auto">
+            <img alt="BDG" class="w-6" src="{{ asset('dashboard-assets/dist/images/bdg.png') }}">
         </a>
         <a href="javascript:;" id="mobile-menu-toggler"> <i data-feather="bar-chart-2" class="w-8 h-8 text-white transform -rotate-90"></i> </a>
     </div>
     <ul class="border-t border-theme-24 py-5 hidden">
         <li>
-            <a href="index.html" class="menu menu--active">
+            <a href="{{ route('dashboard') }}" class="menu
+                                            @if (Request::is('dashboard'))
+                                            menu--active
+                                            @endif
+            ">
                 <div class="menu__icon"> <i data-feather="home"></i> </div>
                 <div class="menu__title"> Dashboard </div>
             </a>
         </li>
-        <li>
-            <a href="javascript:;" class="menu">
-                <div class="menu__icon"> <i data-feather="box"></i> </div>
-                <div class="menu__title"> Menu Layout <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
-            </a>
-            <ul class="">
-                <li>
-                    <a href="index.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Side Menu </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="simple-menu-dashboard.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Simple Menu </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="top-menu-dashboard.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Top Menu </div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="side-menu-inbox.html" class="menu">
-                <div class="menu__icon"> <i data-feather="inbox"></i> </div>
-                <div class="menu__title"> Inbox </div>
-            </a>
-        </li>
-        <li>
-            <a href="side-menu-file-manager.html" class="menu">
-                <div class="menu__icon"> <i data-feather="hard-drive"></i> </div>
-                <div class="menu__title"> File Manager </div>
-            </a>
-        </li>
-        <li>
-            <a href="side-menu-point-of-sale.html" class="menu">
-                <div class="menu__icon"> <i data-feather="credit-card"></i> </div>
-                <div class="menu__title"> Point of Sale </div>
-            </a>
-        </li>
-        <li>
-            <a href="side-menu-chat.html" class="menu">
-                <div class="menu__icon"> <i data-feather="message-square"></i> </div>
-                <div class="menu__title"> Chat </div>
-            </a>
-        </li>
-        <li>
-            <a href="side-menu-post.html" class="menu">
-                <div class="menu__icon"> <i data-feather="file-text"></i> </div>
-                <div class="menu__title"> Post </div>
-            </a>
-        </li>
+
+{{--        Case Part Started--}}
+
         <li class="menu__devider my-6"></li>
-        <li>
-            <a href="javascript:;" class="menu">
-                <div class="menu__icon"> <i data-feather="edit"></i> </div>
-                <div class="menu__title"> Crud <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
-            </a>
-            <ul class="">
-                <li>
-                    <a href="side-menu-crud-data-list.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Data List </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-crud-form.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Form </div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:;" class="menu">
-                <div class="menu__icon"> <i data-feather="users"></i> </div>
-                <div class="menu__title"> Users <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
-            </a>
-            <ul class="">
-                <li>
-                    <a href="side-menu-users-layout-1.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Layout 1 </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-users-layout-2.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Layout 2 </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-users-layout-3.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Layout 3 </div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:;" class="menu">
-                <div class="menu__icon"> <i data-feather="trello"></i> </div>
-                <div class="menu__title"> Profile <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
-            </a>
-            <ul class="">
-                <li>
-                    <a href="side-menu-profile-overview-1.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Overview 1 </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-profile-overview-2.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Overview 2 </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-profile-overview-3.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Overview 3 </div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:;" class="menu">
-                <div class="menu__icon"> <i data-feather="layout"></i> </div>
-                <div class="menu__title"> Pages <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
-            </a>
-            <ul class="">
-                <li>
-                    <a href="javascript:;" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Wizards <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
-                    </a>
-                    <ul class="">
+        @if (Auth::guard('admin')->user()->can('history.view'))
+            <li>
+                <a href="javascript:;" class="menu
+                                            @if (Request::is('dashboard/histories*'))
+                    menu--active
+@endif
+                    ">
+                    <div class="menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg> </div>
+                    <div class="menu__title"> Case History <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                </a>
+                <ul class="">
+                    <li>
+                        <a href="{{ route('dashboard.histories.index') }}" class="menu">
+                            <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list mx-auto"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg> </div>
+                            <div class="menu__title"> View All Cases </div>
+                        </a>
+                    </li>
+                    @if (Auth::guard('admin')->user()->can('history.create'))
                         <li>
-                            <a href="side-menu-wizard-layout-1.html" class="menu">
-                                <div class="menu__icon"> <i data-feather="zap"></i> </div>
-                                <div class="menu__title">Layout 1</div>
+                            <a href="{{ route('dashboard.histories.create') }}" class="menu">
+                                <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> </div>
+                                <div class="menu__title"> Create History </div>
                             </a>
                         </li>
+                    @endif
+                </ul>
+            </li>
+        @endif
+
+        @if (Auth::guard('admin')->user()->can('report.month'))
+            <li>
+                <a href="javascript:;" class="menu
+                                            @if (Request::is('dashboard/reports*'))
+                    menu--active
+@endif
+                    ">
+                    <div class="menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trello"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><rect x="7" y="7" width="3" height="9"></rect><rect x="14" y="7" width="3" height="5"></rect></svg>
+                    </div>
+                    <div class="menu__title"> Case Report <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                </a>
+                <ul class="">
+                    @if (Auth::guard('admin')->user()->can('report.month'))
                         <li>
-                            <a href="side-menu-wizard-layout-2.html" class="menu">
-                                <div class="menu__icon"> <i data-feather="zap"></i> </div>
-                                <div class="menu__title">Layout 2</div>
+                            <a href="{{ route('dashboard.reports.month') }}" class="menu">
+                                <div class="menu__icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                </div><div class="menu__title">Current Month</div>
                             </a>
                         </li>
+                    @endif
+                    @if (Auth::guard('admin')->user()->can('report.date'))
+                    <li>
+                        <a href="{{ route('dashboard.reports.date.index') }}" class="menu">
+                            <div class="menu__icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>
+                            <div class="menu__title"> Case Date </div>
+                        </a>
+                    </li>
+                        @endif
+                    @if (Auth::guard('admin')->user()->can('report.filter'))
                         <li>
-                            <a href="side-menu-wizard-layout-3.html" class="menu">
-                                <div class="menu__icon"> <i data-feather="zap"></i> </div>
-                                <div class="menu__title">Layout 3</div>
+                            <a href="{{ route('dashboard.reports.filter.index') }}" class="menu">
+                                <div class="menu__icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg> </div>
+                                <div class="menu__title"> Case Filter</div>
                             </a>
                         </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript:;" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Blog <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
-                    </a>
-                    <ul class="">
-                        <li>
-                            <a href="side-menu-blog-layout-1.html" class="menu">
-                                <div class="menu__icon"> <i data-feather="zap"></i> </div>
-                                <div class="menu__title">Layout 1</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="side-menu-blog-layout-2.html" class="menu">
-                                <div class="menu__icon"> <i data-feather="zap"></i> </div>
-                                <div class="menu__title">Layout 2</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="side-menu-blog-layout-3.html" class="menu">
-                                <div class="menu__icon"> <i data-feather="zap"></i> </div>
-                                <div class="menu__title">Layout 3</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript:;" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Pricing <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
-                    </a>
-                    <ul class="">
-                        <li>
-                            <a href="side-menu-pricing-layout-1.html" class="menu">
-                                <div class="menu__icon"> <i data-feather="zap"></i> </div>
-                                <div class="menu__title">Layout 1</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="side-menu-pricing-layout-2.html" class="menu">
-                                <div class="menu__icon"> <i data-feather="zap"></i> </div>
-                                <div class="menu__title">Layout 2</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript:;" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Invoice <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
-                    </a>
-                    <ul class="">
-                        <li>
-                            <a href="side-menu-invoice-layout-1.html" class="menu">
-                                <div class="menu__icon"> <i data-feather="zap"></i> </div>
-                                <div class="menu__title">Layout 1</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="side-menu-invoice-layout-2.html" class="menu">
-                                <div class="menu__icon"> <i data-feather="zap"></i> </div>
-                                <div class="menu__title">Layout 2</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript:;" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> FAQ <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
-                    </a>
-                    <ul class="">
-                        <li>
-                            <a href="side-menu-faq-layout-1.html" class="menu">
-                                <div class="menu__icon"> <i data-feather="zap"></i> </div>
-                                <div class="menu__title">Layout 1</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="side-menu-faq-layout-2.html" class="menu">
-                                <div class="menu__icon"> <i data-feather="zap"></i> </div>
-                                <div class="menu__title">Layout 2</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="side-menu-faq-layout-3.html" class="menu">
-                                <div class="menu__icon"> <i data-feather="zap"></i> </div>
-                                <div class="menu__title">Layout 3</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="login-login.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Login </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="login-register.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Register </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="main-error-page.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Error Page </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-update-profile.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Update profile </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-change-password.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Change Password </div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+                    @endif
+                </ul>
+            </li>
+        @endif
+
         <li class="menu__devider my-6"></li>
-        <li>
-            <a href="javascript:;" class="menu">
-                <div class="menu__icon"> <i data-feather="inbox"></i> </div>
-                <div class="menu__title"> Components <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
-            </a>
-            <ul class="">
-                <li>
-                    <a href="javascript:;" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Grid <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
-                    </a>
-                    <ul class="">
+        <li class=""></li>
+        @if (Auth::guard('admin')->user()->can('case.view'))
+            <li>
+                <a href="javascript:;" class="menu
+                                            @if (Request::is('dashboard/cases*'))
+                    menu--active
+@endif
+                    ">
+                    <div class="menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>   </div>
+                    <div class="menu__title"> Case Item <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                </a>
+                <ul class="">
+                    <li>
+                        <a href="{{ route('dashboard.cases.index') }}" class="menu">
+                            <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list mx-auto"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg> </div>
+                            <div class="menu__title"> View Cases Item </div>
+                        </a>
+                    </li>
+                    @if (Auth::guard('admin')->user()->can('case.create'))
                         <li>
-                            <a href="side-menu-regular-table.html" class="menu">
-                                <div class="menu__icon"> <i data-feather="zap"></i> </div>
-                                <div class="menu__title">Regular Table</div>
+                            <a href="{{ route('dashboard.cases.create') }}" class="menu">
+                                <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> </div>
+                                <div class="menu__title"> Create Case </div>
                             </a>
                         </li>
+                    @endif
+                </ul>
+            </li>
+        @endif
+        @if (Auth::guard('admin')->user()->can('project.view'))
+            <li>
+                <a href="javascript:;" class="menu
+                                            @if (Request::is('dashboard/projects*'))
+                    menu--active
+@endif
+                    ">
+                    <div class="menu__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-aperture"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg></div>
+                    <div class="menu__title"> Project <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                </a>
+                <ul class="">
+                    <li>
+                        <a href="{{ route('dashboard.projects.index') }}" class="menu">
+                            <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list mx-auto"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg> </div>
+                            <div class="menu__title"> View Project </div>
+                        </a>
+                    </li>
+                    @if (Auth::guard('admin')->user()->can('project.create'))
                         <li>
-                            <a href="side-menu-datatable.html" class="menu">
-                                <div class="menu__icon"> <i data-feather="zap"></i> </div>
-                                <div class="menu__title">Datatable</div>
+                            <a href="{{ route('dashboard.projects.create') }}" class="menu">
+                                <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> </div>
+                                <div class="menu__title"> Create Project </div>
                             </a>
                         </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="side-menu-accordion.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Accordion </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-button.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Button </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-modal.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Modal </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-alert.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Alert </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-progress-bar.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Progress Bar </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-tooltip.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Tooltip </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-dropdown.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Dropdown </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-toast.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Toast </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-typography.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Typography </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-icon.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Icon </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-loading-icon.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Loading Icon </div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:;" class="menu">
-                <div class="menu__icon"> <i data-feather="sidebar"></i> </div>
-                <div class="menu__title"> Forms <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
-            </a>
-            <ul class="">
-                <li>
-                    <a href="side-menu-regular-form.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Regular Form </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-datepicker.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Datepicker </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-select2.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Select2 </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-file-upload.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> File Upload </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-wysiwyg-editor.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Wysiwyg Editor </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-validation.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Validation </div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:;" class="menu">
-                <div class="menu__icon"> <i data-feather="hard-drive"></i> </div>
-                <div class="menu__title"> Widgets <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
-            </a>
-            <ul class="">
-                <li>
-                    <a href="side-menu-chart.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Chart </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-slider.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Slider </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="side-menu-image-zoom.html" class="menu">
-                        <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="menu__title"> Image Zoom </div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+                    @endif
+                </ul>
+            </li>
+        @endif
+        <li class=""></li>
+
+        @if (Auth::guard('admin')->user()->can('type.view'))
+            <li>
+                <a href="javascript:;" class="menu
+                                            @if (Request::is('dashboard/types*'))
+                    menu--active
+@endif
+                    ">
+                    <div class="menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg> </div>
+                    <div class="menu__title"> Case Type <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                </a>
+                <ul class="">
+                    <li>
+                        <a href="{{ route('dashboard.types.index') }}" class="menu">
+                            <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list mx-auto"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg> </div>
+                            <div class="menu__title"> View Case Type </div>
+                        </a>
+                    </li>
+                    @if (Auth::guard('admin')->user()->can('type.create'))
+                        <li>
+                            <a href="{{ route('dashboard.types.create') }}" class="menu">
+                                <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> </div>
+                                <div class="menu__title"> Create Case Type </div>
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </li>
+        @endif
+        <li class=""></li>
+        @if (Auth::guard('admin')->user()->can('division.view'))
+            <li>
+                <a href="javascript:;" class="menu
+                                            @if (Request::is('dashboard/divisions*'))
+                    menu--active
+@endif
+                    ">
+                    <div class="menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg> </div>
+                    <div class="menu__title"> Case Division <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                </a>
+                <ul class="">
+                    <li>
+                        <a href="{{ route('dashboard.divisions.index') }}" class="menu">
+                            <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list mx-auto"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg> </div>
+                            <div class="menu__title"> View Case Division </div>
+                        </a>
+                    </li>
+                    @if (Auth::guard('admin')->user()->can('division.create'))
+                        <li>
+                            <a href="{{ route('dashboard.divisions.create') }}" class="menu">
+                                <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> </div>
+                                <div class="menu__title"> Create Case Division </div>
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </li>
+        @endif
+
+        <li class=""></li>
+        @if (Auth::guard('admin')->user()->can('court.view'))
+            <li>
+                <a href="javascript:;" class="menu
+                                            @if (Request::is('dashboard/courts*'))
+                    menu--active
+@endif
+                    ">
+                    <div class="menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> </div>
+                    <div class="menu__title"> Court Name <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                </a>
+                <ul class="">
+                    <li>
+                        <a href="{{ route('dashboard.courts.index') }}" class="menu">
+                            <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list mx-auto"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg> </div>
+                            <div class="menu__title"> View Court Name </div>
+                        </a>
+                    </li>
+                    @if (Auth::guard('admin')->user()->can('court.create'))
+                        <li>
+                            <a href="{{ route('dashboard.courts.create') }}" class="menu">
+                                <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> </div>
+                                <div class="menu__title"> Create Court Name </div>
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </li>
+        @endif
+        @if (Auth::guard('admin')->user()->can('advocate.view'))
+            <li>
+                <a href="javascript:;" class="menu
+                                            @if (Request::is('dashboard/advocates*'))
+                    menu--active
+@endif
+                    ">
+                    <div class="menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-check"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                    </div>
+                    <div class="menu__title"> Advocate <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                </a>
+                <ul class="">
+                    <li>
+                        <a href="{{ route('dashboard.advocates.index') }}" class="menu">
+                            <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list mx-auto"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg> </div>
+                            <div class="menu__title"> View Advocate </div>
+                        </a>
+                    </li>
+                    @if (Auth::guard('admin')->user()->can('advocate.create'))
+                        <li>
+                            <a href="{{ route('dashboard.advocates.create') }}" class="menu">
+                                <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> </div>
+                                <div class="menu__title"> Create Advocate </div>
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </li>
+        @endif
+
+{{--        Case Part Ended - Roles and Admins Commented Out--}}
+
     </ul>
 </div>

@@ -7,7 +7,7 @@
 
 @section('admin-section')
     <div class="grid grid-cols-12 gap-6">
-        <div class="col-span-12 xxl:col-span-9 grid grid-cols-12 gap-6">
+        <div class="col-span-12 grid grid-cols-12 gap-6">
             <!-- BEGIN: General Report -->
             <div class="col-span-12 mt-8">
                 <div class="intro-y flex items-center h-10">
@@ -88,9 +88,10 @@
                    <i data-feather="refresh-ccw" class="w-4 h-4 mr-3"></i> Next 7 Days
                 </div>
 
-                <div class="intro-y datatable-wrapper box p-5 mt-5">
-
-                    <table class="table table-report table-report--bordered display datatable w-full">
+                <div class="intro-y datatable-wrapper box p-3 md:p-5 mt-5" style="overflow: visible;">
+                    <!-- Mobile Responsive: Horizontal scroll wrapper -->
+                    <div class="overflow-x-auto" style="width: 100%; overflow-x: auto;">
+                        <table class="table table-report table-report--bordered display datatable w-full" style="min-width: 600px;">
                         <thead>
                         <tr>
 
@@ -169,7 +170,7 @@
 
                                 </td>
                                 <td>
-                                    <span href="" class="font-medium">{{ $nextday->next_date }}</span>
+                                    <span href="" class="font-medium">{{ \Carbon\Carbon::parse($nextday->next_date)->format('d M Y') }}</span>
 
                                 </td>
 
@@ -191,90 +192,12 @@
 
                         </tbody>
                     </table>
+                    </div>
+                    <!-- End overflow wrapper -->
                 </div>
                 <!-- END: Datatable -->
             </div>
         </div>
-        <!----End Left Side---->
-        <div class="col-span-12 xxl:col-span-3 xxl:border-l border-theme-5 -mb-10 pb-10">
-            <div class="xxl:pl-6 grid grid-cols-12 gap-6">
-
-                <!-- BEGIN: Transactions -->
-                <div class="col-span-12 md:col-span-6 xl:col-span-4 xxl:col-span-12 mt-3 xxl:mt-8">
-                    <div class="intro-x flex items-center h-10">
-                        <h2 class="text-lg font-medium truncate mr-5">
-                            Statistics - <span class=" text-theme-6">{{ $month_name}}</span>
-                        </h2>
-                    </div>
-                    <div class="mt-5">
-                        <div class="intro-x">
-                            <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
-                                <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                    <img alt="Midone Tailwind HTML Admin Template" src="dist/images/profile-14.jpg">
-                                </div>
-                                <div class="ml-4 mr-auto">
-                                    <div class="font-medium">Leonardo DiCaprio</div>
-                                    <div class="text-gray-600 text-xs">6 August 2022</div>
-                                </div>
-                                <div class="text-theme-9">+$23</div>
-                            </div>
-                        </div>
-                        <div class="intro-x">
-                            <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
-                                <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                    <img alt="Midone Tailwind HTML Admin Template" src="dist/images/profile-10.jpg">
-                                </div>
-                                <div class="ml-4 mr-auto">
-                                    <div class="font-medium">Tom Cruise</div>
-                                    <div class="text-gray-600 text-xs">21 July 2020</div>
-                                </div>
-                                <div class="text-theme-9">+$83</div>
-                            </div>
-                        </div>
-                        <div class="intro-x">
-                            <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
-                                <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                    <img alt="Midone Tailwind HTML Admin Template" src="dist/images/profile-12.jpg">
-                                </div>
-                                <div class="ml-4 mr-auto">
-                                    <div class="font-medium">Al Pacino</div>
-                                    <div class="text-gray-600 text-xs">5 January 2021</div>
-                                </div>
-                                <div class="text-theme-9">+$199</div>
-                            </div>
-                        </div>
-                        <div class="intro-x">
-                            <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
-                                <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                    <img alt="Midone Tailwind HTML Admin Template" src="dist/images/profile-6.jpg">
-                                </div>
-                                <div class="ml-4 mr-auto">
-                                    <div class="font-medium">Russell Crowe</div>
-                                    <div class="text-gray-600 text-xs">22 April 2020</div>
-                                </div>
-                                <div class="text-theme-9">+$43</div>
-                            </div>
-                        </div>
-                        <div class="intro-x">
-                            <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
-                                <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                    <img alt="Midone Tailwind HTML Admin Template" src="dist/images/profile-15.jpg">
-                                </div>
-                                <div class="ml-4 mr-auto">
-                                    <div class="font-medium">Al Pacino</div>
-                                    <div class="text-gray-600 text-xs">8 October 2022</div>
-                                </div>
-                                <div class="text-theme-9">+$112</div>
-                            </div>
-                        </div>
-                        <a href="" class="intro-x w-full block text-center rounded-md py-3 border border-dotted border-theme-15 text-theme-16">View More</a>
-                    </div>
-                </div>
-                <!-- END: Transactions -->
-            </div>
-        </div>
-
-
     </div>
 
 @endsection

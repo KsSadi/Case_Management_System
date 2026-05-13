@@ -30,9 +30,36 @@ class HistoryController extends Controller
         if (is_null($this->user) || !$this->user->can('history.view')) {
             abort(403, 'Unauthorized Access!');
         }
-        $histories=History::all();
-        return view('backend.pages.histories.index', compact('histories'));
+        // Get all histories, ordered by next_date (oldest expired first, then upcoming)
+        $histories = History::with('cases:id,case_no,division,project,case_type,court_name,adv_name')
+                            ->select('id', 'case_id', 'date', 'past_date', 'next_date', 'status')
+                            ->orderBy('next_date', 'asc')
+                            ->get();
+        
+        // Count old/expired histories
+        $oldHistoriesCount = History::whereDate('next_date', '<', now()->toDateString())->count();
+        
+        return view('backend.pages.histories.index', compact('histories', 'oldHistoriesCount'));
+    }
 
+    /**
+     * Display old/expired histories where next_date has passed
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function oldHistories()
+    {
+        if (is_null($this->user) || !$this->user->can('history.view')) {
+            abort(403, 'Unauthorized Access!');
+        }
+        // Get old/expired histories (next_date < today)
+        $histories = History::with('cases:id,case_no,division,project,case_type,court_name,adv_name')
+                            ->select('id', 'case_id', 'date', 'past_date', 'next_date', 'status')
+                            ->whereDate('next_date', '<', now()->toDateString())
+                            ->orderBy('next_date', 'desc')
+                            ->get();
+        
+        return view('backend.pages.histories.old', compact('histories'));
     }
 
     /**
@@ -45,8 +72,15 @@ class HistoryController extends Controller
         if (is_null($this->user) || !$this->user->can('history.view')) {
             abort(403, 'Unauthorized Access!');
         }
-        $histories=History::all();
-        $cases=CaseItem::all();
+        // Optimize: Only fetch recent histories and only needed case fields
+        $histories = History::with('cases:id,case_no')
+                            ->select('id', 'case_id', 'next_date')
+                            ->orderBy('id', 'desc')
+                            ->limit(100)
+                            ->get();
+        $cases = CaseItem::select('id', 'case_no', 'parties_name')
+                         ->orderBy('id', 'desc')
+                         ->get();
         return view('backend.pages.histories.create', compact('histories','cases'));
     }
 
@@ -121,9 +155,9 @@ class HistoryController extends Controller
             abort(403, 'Unauthorized Access!');
         }
 
-        $history=History::findOrFail($id);
+        $history = History::findOrFail($id);
         try {
-            $history =$history-> update($history->all());
+            $history->update($request->all());
             return ['status'=>'success','data'=>$history,'msg'=>' Case History has been Updated !!'];
 
         }

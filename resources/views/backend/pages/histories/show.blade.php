@@ -101,12 +101,12 @@
                         <tr>
 
                             <th class="border">পূর্ববর্তী তারিখ </th>
-                            <td class="border">{{ $history->past_date }}</td>
+                            <td class="border">{{ \Carbon\Carbon::parse($history->past_date)->format('d M Y') }}</td>
                         </tr>
                         <tr>
 
                             <th class="border">পরবর্তী তারিখ </th>
-                            <td class="border">{{ $history->next_date }}</td>
+                            <td class="border">{{ \Carbon\Carbon::parse($history->next_date)->format('d M Y') }}</td>
                         </tr>
                         <tr>
 

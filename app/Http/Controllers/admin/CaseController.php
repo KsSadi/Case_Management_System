@@ -37,7 +37,8 @@ class CaseController extends Controller
             abort(403, 'Unauthorized Access!');
         }
 
-        $cases = CaseItem::all();
+        // Optimize: Order by latest and load efficiently
+        $cases = CaseItem::orderBy('id', 'desc')->get();
 
         return view('backend.pages.cases.index', compact('cases'));
 
@@ -54,12 +55,13 @@ class CaseController extends Controller
             abort(403, 'Unauthorized Access!');
         }
 
-        $cases = CaseItem::all();
-        $projects= Project::all();
-        $divisions= Division::all();
-        $courts=Court::all();
-        $types= Type::all();
-        $advocates=Advocate::all();
+        // Optimize: Only select needed columns for dropdowns
+        $cases = CaseItem::select('id', 'case_no')->orderBy('id', 'desc')->limit(100)->get();
+        $projects = Project::select('id', 'name')->orderBy('name')->get();
+        $divisions = Division::select('id', 'name')->orderBy('name')->get();
+        $courts = Court::select('id', 'name')->orderBy('name')->get();
+        $types = Type::select('id', 'name')->orderBy('name')->get();
+        $advocates = Advocate::select('id', 'name')->orderBy('name')->get();
 
         return view('backend.pages.cases.create', compact('cases','projects','divisions','types','courts','advocates'));
     }
