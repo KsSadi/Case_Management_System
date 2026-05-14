@@ -18,6 +18,7 @@ Case Filtering
         </div>
         <div class="p-5" id="horizontal-form">
             <form  id="submit-form" method="POST">
+                @csrf
 
                 <div>
                     <label class="flex flex-col sm:flex-row" style="margin-bottom: 10px;">প্রজেক্টের নাম  </label>
