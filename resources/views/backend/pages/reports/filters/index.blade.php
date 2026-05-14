@@ -144,43 +144,23 @@ Case Filtering
 
                     </td>
                     <td>
-                        <span href="" class="font-medium">@if($history->cases)
-                                {{ $history->cases->projects->name}}
-                            @else
-                                Not Found
-                            @endif</span>
+                        <span href="" class="font-medium">{{ $history->cases?->projects?->name ?? 'Not Found' }}</span>
 
                     </td>
                     <td>
-                        <span href="" class="font-medium">@if($history->cases)
-                                {{ $history->cases->divisions->name}}
-                            @else
-                                Not Found
-                            @endif</span>
+                        <span href="" class="font-medium">{{ $history->cases?->divisions?->name ?? 'Not Found' }}</span>
 
                     </td>
                     <td>
-                        <span href="" class="font-medium">@if($history->cases)
-                                {{ $history->cases->types->name }}
-                            @else
-                                Not Found
-                            @endif</span>
+                        <span href="" class="font-medium">{{ $history->cases?->types?->name ?? 'Not Found' }}</span>
 
                     </td>
                     <td>
-                        <span href="" class="font-medium">@if($history->cases)
-                                {{ $history->cases->courts->name }}
-                            @else
-                                Not Found
-                            @endif</span>
+                        <span href="" class="font-medium">{{ $history->cases?->courts?->name ?? 'Not Found' }}</span>
 
                     </td>
                     <td>
-                        <span href="" class="font-medium"> @if($history->cases)
-                                {{ $history->cases->advocates->name }}
-                            @else
-                                Not Found
-                            @endif </span>
+                        <span href="" class="font-medium">{{ $history->cases?->advocates?->name ?? 'Not Found' }}</span>
 
                     </td>
                     <td>
