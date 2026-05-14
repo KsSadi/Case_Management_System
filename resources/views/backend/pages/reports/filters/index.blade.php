@@ -17,7 +17,7 @@ Case Filtering
             </h2>
         </div>
         <div class="p-5" id="horizontal-form">
-            <form  id="submit-form" method="POST">
+            <form  id="submit-form" action="{{ route('dashboard.reports.filter.store') }}" method="POST">
                 @csrf
 
                 <div>

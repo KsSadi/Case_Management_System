@@ -60,7 +60,37 @@ class FilterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (is_null($this->user) || !$this->user->can('report.date')) {
+            abort(403, 'Unauthorized Access!');
+        }
+
+        $projects  = Project::all();
+        $divisions = Division::all();
+        $courts    = Court::all();
+        $types     = Type::all();
+        $advocates = Advocate::all();
+
+        $query = History::query();
+
+        if ($request->filled('project')) {
+            $query->whereHas('cases', fn($q) => $q->where('project', $request->project));
+        }
+        if ($request->filled('division')) {
+            $query->whereHas('cases', fn($q) => $q->where('division', $request->division));
+        }
+        if ($request->filled('case_type')) {
+            $query->whereHas('cases', fn($q) => $q->where('case_type', $request->case_type));
+        }
+        if ($request->filled('court_name')) {
+            $query->whereHas('cases', fn($q) => $q->where('court_name', $request->court_name));
+        }
+        if ($request->filled('adv_name')) {
+            $query->whereHas('cases', fn($q) => $q->where('adv_name', $request->adv_name));
+        }
+
+        $histories = $query->get();
+
+        return view('backend.pages.reports.filters.index', compact('projects', 'divisions', 'courts', 'types', 'advocates', 'histories'));
     }
 
     /**
