@@ -78,7 +78,10 @@ class HistoryController extends Controller
                             ->orderBy('id', 'desc')
                             ->limit(100)
                             ->get();
+        // Exclude cases that already have at least one history entry
+        $usedCaseIds = History::pluck('case_id')->unique()->toArray();
         $cases = CaseItem::select('id', 'case_no', 'parties_name')
+                         ->whereNotIn('id', $usedCaseIds)
                          ->orderBy('id', 'desc')
                          ->get();
         return view('backend.pages.histories.create', compact('histories','cases'));
