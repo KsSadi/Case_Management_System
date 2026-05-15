@@ -162,7 +162,7 @@
 
 {{--                                </td>--}}
                                 <td>
-                        <span href="" class="font-medium"> @if($nextday->cases)
+                        <span href="" class="font-medium"> @if($nextday->cases && $nextday->cases->advocates)
                                 {{ $nextday->cases->advocates->name }}
                             @else
                                 Not Found
