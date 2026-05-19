@@ -68,7 +68,7 @@ class AuthenticatedSessionController extends Controller
         ]);
 
         //Try Logging in
-        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], true)) {
             Session::flash('login_success', 'Successfully Logged in!');
             return redirect()->intended(route('dashboard'));
         } else {
