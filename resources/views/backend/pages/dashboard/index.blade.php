@@ -79,6 +79,104 @@
             </div>
             <!-- END: General Report -->
 
+            <!-- BEGIN: Today & Tomorrow Cases -->
+            <div class="col-span-12 mt-8">
+                <div class="grid grid-cols-12 gap-6">
+
+                    <!-- Today's Cases -->
+                    <div class="col-span-12 lg:col-span-6">
+                        <div class="intro-y flex items-center h-10 mb-3">
+                            <h2 class="text-lg font-medium truncate mr-3">
+                                আজকের মামলা
+                            </h2>
+                            <span class="rounded px-2 py-1 text-white text-sm font-bold" style="background:#0d6efd;">{{ $todayCases->count() }}</span>
+                            <span class="ml-2 text-gray-500 text-sm">{{ \Carbon\Carbon::today()->format('d M Y') }}</span>
+                        </div>
+                        <div class="intro-y box p-3 md:p-4" style="overflow:visible;">
+                            <div class="overflow-x-auto">
+                                <table class="table table-report table-report--bordered w-full" style="min-width:400px;">
+                                    <thead>
+                                        <tr>
+                                            <th class="whitespace-no-wrap">ক্রঃ নং</th>
+                                            <th class="whitespace-no-wrap">মামলা নং</th>
+                                            <th class="whitespace-no-wrap">আইনজীবী</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($todayCases as $item)
+                                            <tr>
+                                                <td><span class="font-medium">{{ $loop->iteration }}</span></td>
+                                                <td>
+                                                    <a class="flex items-center text-theme-1 font-medium" href="{{ route('dashboard.histories.show', $item->id) }}">
+                                                        {{ $item->cases ? $item->cases->case_no : 'Not Found' }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <span class="font-medium">
+                                                        {{ ($item->cases && $item->cases->advocates) ? $item->cases->advocates->name : 'Not Found' }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="3" class="text-center text-gray-500 py-4">আজকের কোনো মামলা নেই</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tomorrow's Cases -->
+                    <div class="col-span-12 lg:col-span-6">
+                        <div class="intro-y flex items-center h-10 mb-3">
+                            <h2 class="text-lg font-medium truncate mr-3">
+                                আগামীকালের মামলা
+                            </h2>
+                            <span class="rounded px-2 py-1 text-white text-sm font-bold" style="background:#fd7e14;">{{ $tomorrowCases->count() }}</span>
+                            <span class="ml-2 text-gray-500 text-sm">{{ \Carbon\Carbon::tomorrow()->format('d M Y') }}</span>
+                        </div>
+                        <div class="intro-y box p-3 md:p-4" style="overflow:visible;">
+                            <div class="overflow-x-auto">
+                                <table class="table table-report table-report--bordered w-full" style="min-width:400px;">
+                                    <thead>
+                                        <tr>
+                                            <th class="whitespace-no-wrap">ক্রঃ নং</th>
+                                            <th class="whitespace-no-wrap">মামলা নং</th>
+                                            <th class="whitespace-no-wrap">আইনজীবী</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($tomorrowCases as $item)
+                                            <tr>
+                                                <td><span class="font-medium">{{ $loop->iteration }}</span></td>
+                                                <td>
+                                                    <a class="flex items-center text-theme-1 font-medium" href="{{ route('dashboard.histories.show', $item->id) }}">
+                                                        {{ $item->cases ? $item->cases->case_no : 'Not Found' }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <span class="font-medium">
+                                                        {{ ($item->cases && $item->cases->advocates) ? $item->cases->advocates->name : 'Not Found' }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="3" class="text-center text-gray-500 py-4">আগামীকালের কোনো মামলা নেই</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- END: Today & Tomorrow Cases -->
+
             <div class="col-span-12 mt-8">
                 <div class="intro-y flex items-center h-10">
                     <h2 class="text-lg font-medium truncate mr-5">
@@ -162,7 +260,7 @@
 
 {{--                                </td>--}}
                                 <td>
-                        <span href="" class="font-medium"> @if($nextday->cases)
+                        <span href="" class="font-medium"> @if($nextday->cases && $nextday->cases->advocates)
                                 {{ $nextday->cases->advocates->name }}
                             @else
                                 Not Found

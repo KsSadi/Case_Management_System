@@ -78,7 +78,7 @@
 
                     </td>
                     <td class="hidden md:table-cell">
-                        <span class="font-medium">@if($history->cases)
+                        <span class="font-medium">@if($history->cases && $history->cases->projects)
                                 {{ $history->cases->projects->name}}
                             @else
                                 Not Found
@@ -86,7 +86,7 @@
 
                     </td>
                     <td class="hidden lg:table-cell">
-                        <span class="font-medium">@if($history->cases)
+                        <span class="font-medium">@if($history->cases && $history->cases->divisions)
                                 {{ $history->cases->divisions->name}}
                             @else
                                 Not Found

@@ -31,8 +31,6 @@ class DashboardController extends Controller
             return view("backend.auth.login");
         }
         else{
-            $statData = [];
-
             // Cache dashboard statistics for 5 minutes to improve performance
             $cacheKey = 'dashboard_stats_' . date('Y-m-d-H');
             
@@ -57,6 +55,25 @@ class DashboardController extends Controller
                 $from = Carbon::now();
                 $to = Carbon::now()->addDays(7)->toDateString();
                 return History::whereBetween('next_date', [$from, $to])
+                              ->with(['cases.advocates', 'cases.projects', 'cases.divisions', 'cases.types', 'cases.courts'])
+                              ->orderBy('next_date', 'asc')
+                              ->get();
+            });
+
+            // Today's cases (cached for 5 minutes)
+            $todayCacheKey = 'today_cases_' . date('Y-m-d');
+            $todayCases = Cache::remember($todayCacheKey, 300, function() {
+                return History::whereDate('next_date', Carbon::today())
+                              ->with(['cases.advocates'])
+                              ->orderBy('next_date', 'asc')
+                              ->get();
+            });
+
+            // Tomorrow's cases (cached for 5 minutes)
+            $tomorrowCacheKey = 'tomorrow_cases_' . date('Y-m-d');
+            $tomorrowCases = Cache::remember($tomorrowCacheKey, 300, function() {
+                return History::whereDate('next_date', Carbon::tomorrow())
+                              ->with(['cases.advocates'])
                               ->orderBy('next_date', 'asc')
                               ->get();
             });
@@ -65,9 +82,10 @@ class DashboardController extends Controller
             $month_name = $date_m->format('F');
 
             return view('backend.pages.dashboard.index', compact(
-                'statData',
                 'month_name',
-                'nextdays'
+                'nextdays',
+                'todayCases',
+                'tomorrowCases'
             ) + $stats);
         }
         //return view('backend.pages.dashboard.index');
