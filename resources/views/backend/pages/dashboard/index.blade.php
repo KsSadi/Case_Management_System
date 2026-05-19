@@ -104,15 +104,17 @@
                                     </thead>
                                     <tbody>
                                         @forelse($todayCases as $item)
-                                            <tr>
-                                                <td><span class="font-medium">{{ $loop->iteration }}</span></td>
-                                                <td>
-                                                    <a class="flex items-center text-theme-1 font-medium" href="{{ route('dashboard.histories.show', $item->id) }}">
+                                            <tr style="{{ $loop->even ? 'background-color:#f0f4ff;' : 'background-color:#ffffff;' }} transition: background 0.2s;" onmouseover="this.style.backgroundColor='#dbeafe'" onmouseout="this.style.backgroundColor='{{ $loop->even ? '#f0f4ff' : '#ffffff' }}'">
+                                                <td style="width:48px;text-align:center;">
+                                                    <span style="display:inline-block;min-width:26px;padding:2px 7px;background:#0d6efd;color:#fff;border-radius:12px;font-size:12px;font-weight:700;">{{ $loop->iteration }}</span>
+                                                </td>
+                                                <td style="border-left:3px solid #0d6efd;">
+                                                    <a class="font-medium" style="color:#1e40af;" href="{{ route('dashboard.histories.show', $item->id) }}">
                                                         {{ $item->cases ? $item->cases->case_no : 'Not Found' }}
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <span class="font-medium">
+                                                    <span style="font-size:12px;background:#e0f2fe;color:#0369a1;padding:3px 8px;border-radius:20px;white-space:nowrap;">
                                                         {{ ($item->cases && $item->cases->advocates) ? $item->cases->advocates->name : 'Not Found' }}
                                                     </span>
                                                 </td>
@@ -149,15 +151,17 @@
                                     </thead>
                                     <tbody>
                                         @forelse($tomorrowCases as $item)
-                                            <tr>
-                                                <td><span class="font-medium">{{ $loop->iteration }}</span></td>
-                                                <td>
-                                                    <a class="flex items-center text-theme-1 font-medium" href="{{ route('dashboard.histories.show', $item->id) }}">
+                                            <tr style="{{ $loop->even ? 'background-color:#fff7ed;' : 'background-color:#ffffff;' }} transition: background 0.2s;" onmouseover="this.style.backgroundColor='#fed7aa'" onmouseout="this.style.backgroundColor='{{ $loop->even ? '#fff7ed' : '#ffffff' }}'">
+                                                <td style="width:48px;text-align:center;">
+                                                    <span style="display:inline-block;min-width:26px;padding:2px 7px;background:#fd7e14;color:#fff;border-radius:12px;font-size:12px;font-weight:700;">{{ $loop->iteration }}</span>
+                                                </td>
+                                                <td style="border-left:3px solid #fd7e14;">
+                                                    <a class="font-medium" style="color:#92400e;" href="{{ route('dashboard.histories.show', $item->id) }}">
                                                         {{ $item->cases ? $item->cases->case_no : 'Not Found' }}
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <span class="font-medium">
+                                                    <span style="font-size:12px;background:#ffedd5;color:#c2410c;padding:3px 8px;border-radius:20px;white-space:nowrap;">
                                                         {{ ($item->cases && $item->cases->advocates) ? $item->cases->advocates->name : 'Not Found' }}
                                                     </span>
                                                 </td>
