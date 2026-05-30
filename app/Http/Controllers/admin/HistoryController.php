@@ -31,22 +31,48 @@ class HistoryController extends Controller
             abort(403, 'Unauthorized Access!');
         }
         // Get all histories, ordered by next_date (oldest expired first, then upcoming)
-        $histories = History::with('cases:id,case_no,division,project,case_type,court_name,adv_name')
-                            ->select('id', 'case_id', 'date', 'past_date', 'next_date', 'status')
+        $histories = History::with('cases:id,case_no,division,project,case_type,court_name,adv_name,company_id')
+                            ->select('id', 'case_id', 'date', 'past_date', 'next_date', 'status', 'is_nispotti')
                             ->orderBy('next_date', 'asc')
                             ->get();
         
-        // Count old/expired histories
-        $oldHistoriesCount = History::whereDate('next_date', '<', now()->toDateString())->count();
+        // Count old/expired histories (excluding settled ones)
+        $oldHistoriesCount = History::where('is_nispotti', false)
+                                    ->whereDate('next_date', '<', now()->toDateString())->count();
         
         return view('backend.pages.histories.index', compact('histories', 'oldHistoriesCount'));
     }
 
-    /**
-     * Display old/expired histories where next_date has passed
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function nispottiHistories(Request $request)
+    {
+        if (is_null($this->user) || !$this->user->can('history.view')) {
+            abort(403, 'Unauthorized Access!');
+        }
+
+        $query = History::with('cases:id,case_no,division,project,case_type,court_name,adv_name')
+                        ->select('id', 'case_id', 'date', 'past_date', 'next_date', 'status', 'is_nispotti', 'nispotti_date')
+                        ->where('is_nispotti', true);
+
+        if ($request->filled('year')) {
+            $query->whereYear('nispotti_date', $request->year);
+        }
+        if ($request->filled('month')) {
+            $query->whereMonth('nispotti_date', $request->month);
+        }
+
+        $histories = $query->orderBy('nispotti_date', 'desc')->get();
+
+        // Build available years from all nispotti records for the filter dropdown
+        $years = History::where('is_nispotti', true)
+                        ->whereNotNull('nispotti_date')
+                        ->selectRaw('YEAR(nispotti_date) as year')
+                        ->distinct()
+                        ->orderBy('year', 'desc')
+                        ->pluck('year');
+
+        return view('backend.pages.histories.nispotti', compact('histories', 'years'));
+    }
+
     public function oldHistories()
     {
         if (is_null($this->user) || !$this->user->can('history.view')) {
@@ -54,7 +80,8 @@ class HistoryController extends Controller
         }
         // Get old/expired histories (next_date < today)
         $histories = History::with('cases:id,case_no,division,project,case_type,court_name,adv_name')
-                            ->select('id', 'case_id', 'date', 'past_date', 'next_date', 'status')
+                            ->select('id', 'case_id', 'date', 'past_date', 'next_date', 'status', 'is_nispotti')
+                            ->where('is_nispotti', false)
                             ->whereDate('next_date', '<', now()->toDateString())
                             ->orderBy('next_date', 'desc')
                             ->get();
@@ -99,7 +126,14 @@ class HistoryController extends Controller
             abort(403, 'Unauthorized Access!');
         }
         try{
-            $history=History::create($request->all());
+            $data = $request->all();
+            $data['is_nispotti'] = $request->has('is_nispotti') ? 1 : 0;
+            if ($data['is_nispotti']) {
+                $data['next_date'] = null;
+            } else {
+                $data['nispotti_date'] = null;
+            }
+            $history=History::create($data);
             return ['status'=>'success','data'=>$history,'msg'=>' Case History has been Created !!'];
 
 
@@ -160,7 +194,14 @@ class HistoryController extends Controller
 
         $history = History::findOrFail($id);
         try {
-            $history->update($request->all());
+            $data = $request->all();
+            $data['is_nispotti'] = $request->has('is_nispotti') ? 1 : 0;
+            if ($data['is_nispotti']) {
+                $data['next_date'] = null;
+            } else {
+                $data['nispotti_date'] = null;
+            }
+            $history->update($data);
             return ['status'=>'success','data'=>$history,'msg'=>' Case History has been Updated !!'];
 
         }

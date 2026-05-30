@@ -2,3 +2,4 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=[" your-google-map-api"]&libraries=places"></script>
 <script src="{{ asset('dashboard-assets/dist/js/app.js') }}"></script>
 
+@yield('scripts')

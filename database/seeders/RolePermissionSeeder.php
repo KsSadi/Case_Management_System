@@ -101,6 +101,13 @@ class RolePermissionSeeder extends Seeder
             'advocate.delete',
             'advocate.approve',
 
+            //permissions name for company
+            'company.create',
+            'company.view',
+            'company.edit',
+            'company.delete',
+            'company.approve',
+
             //permissions name for advocate
             'history.create',
             'history.view',

@@ -1,5 +1,5 @@
 @section('page-title')
-    Advocate
+    Company
 @endsection
 
 
@@ -9,15 +9,15 @@
 @include('backend.layouts.partials.alerts')
 
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">Advocates List</h2>
+    <h2 class="text-lg font-medium mr-auto">Companies List</h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-        <a href="{{ route('dashboard.advocates.create') }}" class="button w-full sm:w-auto flex items-center text-white bg-theme-1 shadow-md mr-2">
+        <a href="{{ route('dashboard.companies.create') }}" class="button w-full sm:w-auto flex items-center text-white bg-theme-1 shadow-md mr-2">
             <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="12" y1="8" x2="12" y2="16"></line>
                 <line x1="8" y1="12" x2="16" y2="12"></line>
             </svg>
-            New Advocate
+            New Company
         </a>
     </div>
 </div>
@@ -28,12 +28,12 @@
         <form id="search-form" class="xl:flex sm:mr-auto w-full sm:w-auto">
             <div class="sm:flex items-center w-full sm:w-auto">
                 <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Search:</label>
-                <input 
-                    id="search-input" 
-                    name="search" 
-                    type="text" 
-                    class="input w-full sm:w-64 xxl:w-full mt-2 sm:mt-0 border border-gray-300" 
-                    placeholder="Search by name..." 
+                <input
+                    id="search-input"
+                    name="search"
+                    type="text"
+                    class="input w-full sm:w-64 xxl:w-full mt-2 sm:mt-0 border border-gray-300"
+                    placeholder="Search by name..."
                     value="{{ $search ?? '' }}"
                     autocomplete="off">
                 <button type="button" id="clear-search" class="button w-full sm:w-24 bg-gray-200 text-gray-600 mt-2 sm:mt-0 sm:ml-2 {{ !$search ? 'hidden' : '' }}">
@@ -48,7 +48,7 @@
 <div class="intro-y mt-5" id="results-summary">
     <div class="flex items-center">
         <div class="text-gray-600">
-            Showing {{ $advocates->firstItem() ?? 0 }} to {{ $advocates->lastItem() ?? 0 }} of {{ $advocates->total() }} entries
+            Showing {{ $companies->firstItem() ?? 0 }} to {{ $companies->lastItem() ?? 0 }} of {{ $companies->total() }} entries
             @if($search)
                 <span class="font-medium">(filtered from search: "{{ $search }}")</span>
             @endif
@@ -73,37 +73,36 @@
         <thead>
             <tr>
                 <th class="whitespace-no-wrap text-center" width="10%">ICON</th>
-                <th class="whitespace-no-wrap">ADVOCATE NAME</th>
+                <th class="whitespace-no-wrap">COMPANY NAME</th>
                 <th class="text-center whitespace-no-wrap">ACTIONS</th>
             </tr>
         </thead>
-        <tbody id="advocates-table-body">
-            @forelse ($advocates as $advocate)
+        <tbody id="companies-table-body">
+            @forelse ($companies as $company)
             <tr class="intro-x">
                 <td class="text-center">
                     <div class="flex justify-center">
                         <div class="w-10 h-10 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-check text-theme-1">
-                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="8.5" cy="7" r="4"></circle>
-                                <polyline points="17 11 19 13 23 9"></polyline>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase text-theme-1">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
                             </svg>
                         </div>
                     </div>
                 </td>
                 <td>
-                    <span class="font-medium whitespace-no-wrap">{{ $advocate->name }}</span>
+                    <span class="font-medium whitespace-no-wrap">{{ $company->name }}</span>
                 </td>
                 <td class="table-report__action">
                     <div class="flex justify-center items-center">
-                        <a class="flex items-center mr-3 text-theme-1" href="{{ route('dashboard.advocates.edit', $advocate->id) }}" title="Edit">
+                        <a class="flex items-center mr-3 text-theme-1" href="{{ route('dashboard.companies.edit', $company->id) }}" title="Edit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square w-4 h-4 mr-1">
                                 <polyline points="9 11 12 14 22 4"></polyline>
                                 <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
                             </svg>
                             <span class="hidden sm:inline">Edit</span>
                         </a>
-                        <a class="flex items-center text-theme-6" href="{{ route('dashboard.advocates.destroy', $advocate->id) }}" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $advocate->id }}').submit()" title="Delete">
+                        <a class="flex items-center text-theme-6" href="{{ route('dashboard.companies.destroy', $company->id) }}" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $company->id }}').submit()" title="Delete">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 w-4 h-4 mr-1">
                                 <polyline points="3 6 5 6 21 6"></polyline>
                                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -112,7 +111,7 @@
                             </svg>
                             <span class="hidden sm:inline">Delete</span>
                         </a>
-                        <form id="delete-form-{{$advocate->id}}" action="{{ route('dashboard.advocates.destroy', $advocate->id) }}" method="POST" style="display: none">
+                        <form id="delete-form-{{$company->id}}" action="{{ route('dashboard.companies.destroy', $company->id) }}" method="POST" style="display: none">
                             @method('DELETE')
                             @csrf
                         </form>
@@ -127,7 +126,7 @@
                             <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
                             <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
                         </svg>
-                        <p class="text-gray-600 text-lg">No advocates found</p>
+                        <p class="text-gray-600 text-lg">No companies found</p>
                         @if($search)
                             <p class="text-gray-500 text-sm mt-2">Try adjusting your search criteria</p>
                         @endif
@@ -141,13 +140,13 @@
 
 <!-- Pagination -->
 <div id="pagination-container" class="mt-5">
-    @if($advocates->hasPages())
+    @if($companies->hasPages())
     <div class="intro-y flex flex-wrap sm:flex-row sm:flex-no-wrap items-center">
         <div class="w-full sm:w-auto sm:mr-auto">
-            {{ $advocates->appends(['search' => $search])->links() }}
+            {{ $companies->appends(['search' => $search])->links() }}
         </div>
         <div class="text-center sm:text-right text-gray-600 mt-3 sm:mt-0">
-            Page {{ $advocates->currentPage() }} of {{ $advocates->lastPage() }}
+            Page {{ $companies->currentPage() }} of {{ $companies->lastPage() }}
         </div>
     </div>
     @endif
@@ -159,26 +158,25 @@
 <script>
     $(document).ready(function() {
         let searchTimeout;
-        let currentPage = 1;
-        
-        // Live search functionality with AJAX
+
+        // Live search with AJAX
         $('#search-input').on('keyup', function() {
             clearTimeout(searchTimeout);
             const searchValue = $(this).val();
-            
+
             searchTimeout = setTimeout(function() {
-                performSearch(searchValue, 1); // Reset to page 1 on new search
-            }, 500); // Wait 500ms after user stops typing
+                performSearch(searchValue, 1);
+            }, 500);
         });
-        
+
         // Clear search
         $('#clear-search').on('click', function() {
             $('#search-input').val('');
             $('#clear-search').addClass('hidden');
             performSearch('', 1);
         });
-        
-        // Handle pagination clicks
+
+        // Pagination clicks
         $(document).on('click', '#pagination-container .pagination a', function(e) {
             e.preventDefault();
             const url = $(this).attr('href');
@@ -186,68 +184,37 @@
             const searchValue = $('#search-input').val();
             performSearch(searchValue, page);
         });
-        
-        // Perform AJAX search function
+
         function performSearch(searchValue, page = 1) {
-            // Show loading indicator
             $('#loading-indicator').removeClass('hidden');
             $('#results-summary').addClass('hidden');
-            
-            $.ajax({
-                url: '{{ route("dashboard.advocates.index") }}',
-                type: 'GET',
-                data: {
-                    search: searchValue,
-                    page: page
-                },
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                success: function(response) {
-                    // Update table rows
-                    $('#advocates-table-body').html(response.html);
-                    
-                    // Update pagination
-                    $('#pagination-container').html(response.pagination);
-                    
-                    // Update summary
-                    $('#results-summary').html(response.summary);
-                    
-                    // Hide loading, show summary
-                    $('#loading-indicator').addClass('hidden');
-                    $('#results-summary').removeClass('hidden');
-                    
-                    // Update URL without reloading
-                    const url = new URL(window.location.href);
-                    if (searchValue) {
-                        url.searchParams.set('search', searchValue);
-                    } else {
-                        url.searchParams.delete('search');
-                    }
-                    if (page > 1) {
-                        url.searchParams.set('page', page);
-                    } else {
-                        url.searchParams.delete('page');
-                    }
-                    window.history.pushState({}, '', url);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Search error:', error);
-                    $('#loading-indicator').addClass('hidden');
-                    $('#results-summary').removeClass('hidden');
-                    alert('An error occurred while searching. Please try again.');
-                }
-            });
-        }
-        
-        // Show/hide clear button
-        $('#search-input').on('input', function() {
-            if ($(this).val().length > 0) {
+
+            if (searchValue.length > 0) {
                 $('#clear-search').removeClass('hidden');
             } else {
                 $('#clear-search').addClass('hidden');
             }
-        });
+
+            $.ajax({
+                url: '{{ route("dashboard.companies.index") }}',
+                type: 'GET',
+                data: {
+                    search: searchValue,
+                    page: page,
+                },
+                success: function(data) {
+                    $('#companies-table-body').html(data.html);
+                    $('#pagination-container').html(data.pagination);
+                    $('#results-summary').html(data.summary);
+                    $('#loading-indicator').addClass('hidden');
+                    $('#results-summary').removeClass('hidden');
+                },
+                error: function() {
+                    $('#loading-indicator').addClass('hidden');
+                    $('#results-summary').removeClass('hidden');
+                }
+            });
+        }
     });
 </script>
 @endsection

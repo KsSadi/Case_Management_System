@@ -26,6 +26,12 @@
             Old Histories ({{ $oldHistoriesCount }})
         </a>
         @endif
+        <a href="{{ route('dashboard.histories.nispotti') }}" style="max-width: 250px" class="button w-100 flex items-center bg-green-600 text-white">
+            <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            নিষ্পত্তি তালিকা
+        </a>
     </div>
 
     <div class="intro-y datatable-wrapper box p-3 md:p-5 mt-5" style="overflow: visible;">
@@ -39,8 +45,9 @@
                     <th class="whitespace-no-wrap hidden md:table-cell">প্রজেক্টের নাম</th>
                     <th class="whitespace-no-wrap hidden lg:table-cell">মামলার বিভাগ</th>
                     <th class="whitespace-no-wrap hidden lg:table-cell">মামলার ধরন</th>
-                    <th class="whitespace-no-wrap hidden xl:table-cell">বিচারাধীন বিজ্ঞ আদালতের নাম</th>
-                    <th class="whitespace-no-wrap hidden md:table-cell">নিয়োজিত আইনজীবীর নাম</th>
+                    <th class="whitespace-no-wrap hidden xl:table-cell">আদালতের নাম</th>
+                    <th class="whitespace-no-wrap hidden md:table-cell">আইনজীবীর নাম</th>
+                    <th class="whitespace-no-wrap hidden md:table-cell">কোম্পানির নাম</th>
                     <th class="whitespace-no-wrap">পরবর্তী তারিখ</th>
                     <th class="text-center whitespace-no-wrap">ACTIONS</th>
 
@@ -51,9 +58,10 @@
 
             @foreach($histories as $history)
                 @php
-                    $isExpired = \Carbon\Carbon::parse($history->next_date)->lt(now()->startOfDay());
+                    $isNispotti = $history->is_nispotti;
+                    $isExpired = !$isNispotti && \Carbon\Carbon::parse($history->next_date)->lt(now()->startOfDay());
                 @endphp
-                <tr class="{{ $isExpired ? 'bg-red-50' : '' }}">
+                <tr class="{{ $isExpired ? 'bg-red-50' : ($isNispotti ? 'bg-green-50' : '') }}">
 
 
                     <td>
@@ -90,9 +98,20 @@
                         <span class="font-medium">{{ $history->cases?->advocates?->name ?? 'Not Found' }}</span>
 
                     </td>
+                    <td class="hidden md:table-cell">
+                        <span class="font-medium">{{ $history->cases?->companies?->name ?? '—' }}</span>
+                    </td>
                     <td>
-                        <span href="" class="font-medium {{ $isExpired ? 'text-theme-6 font-bold' : '' }}">{{ \Carbon\Carbon::parse($history->next_date)->format('d M Y') }}</span>
-
+                        @if($isNispotti)
+                            <div>
+                                <span class="px-2 py-1 rounded text-xs font-bold bg-green-100 text-green-800 border border-green-400">নিষ্পত্তি</span>
+                                @if($history->nispotti_date)
+                                    <div class="text-xs text-green-700 mt-1">{{ \Carbon\Carbon::parse($history->nispotti_date)->format('d M Y') }}</div>
+                                @endif
+                            </div>
+                        @else
+                            <span href="" class="font-medium {{ $isExpired ? 'text-theme-6 font-bold' : '' }}">{{ $history->next_date ? \Carbon\Carbon::parse($history->next_date)->format('d M Y') : '-' }}</span>
+                        @endif
                     </td>
 
 

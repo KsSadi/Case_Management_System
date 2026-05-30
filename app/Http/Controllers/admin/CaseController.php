@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Advocate;
 use App\Models\CaseItem;
+use App\Models\Company;
 use App\Models\Court;
 use App\Models\Division;
 use App\Models\Project;
@@ -38,7 +39,7 @@ class CaseController extends Controller
         }
 
         // Optimize: Order by latest and load efficiently
-        $cases = CaseItem::orderBy('id', 'desc')->get();
+        $cases = CaseItem::with('companies')->orderBy('id', 'desc')->get();
 
         return view('backend.pages.cases.index', compact('cases'));
 
@@ -62,8 +63,9 @@ class CaseController extends Controller
         $courts = Court::select('id', 'name')->orderBy('name')->get();
         $types = Type::select('id', 'name')->orderBy('name')->get();
         $advocates = Advocate::select('id', 'name')->orderBy('name')->get();
+        $companies = Company::select('id', 'name')->orderBy('name')->get();
 
-        return view('backend.pages.cases.create', compact('cases','projects','divisions','types','courts','advocates'));
+        return view('backend.pages.cases.create', compact('cases','projects','divisions','types','courts','advocates','companies'));
     }
 
     /**
@@ -124,8 +126,15 @@ class CaseController extends Controller
         }
 
         $case = CaseItem::findOrFail($id);
+        $cases = CaseItem::select('id', 'case_no')->orderBy('id', 'desc')->limit(100)->get();
+        $projects = Project::select('id', 'name')->orderBy('name')->get();
+        $divisions = Division::select('id', 'name')->orderBy('name')->get();
+        $courts = Court::select('id', 'name')->orderBy('name')->get();
+        $types = Type::select('id', 'name')->orderBy('name')->get();
+        $advocates = Advocate::select('id', 'name')->orderBy('name')->get();
+        $companies = Company::select('id', 'name')->orderBy('name')->get();
 
-        return view('backend.pages.cases.create', compact('case'));
+        return view('backend.pages.cases.create', compact('case', 'cases', 'projects', 'divisions', 'types', 'courts', 'advocates', 'companies'));
     }
 
     /**

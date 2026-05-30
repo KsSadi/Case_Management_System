@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminAuth\AuthenticatedSessionController as AdminAuthSessionController;
 use App\Http\Controllers\admin\AdvocateController;
+use App\Http\Controllers\admin\CompanyController;
 use App\Http\Controllers\admin\CaseController;
 use App\Http\Controllers\admin\CaseDivisionController;
 use App\Http\Controllers\admin\CaseTypeController;
@@ -58,7 +59,9 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::resource('cases', CaseController::class)->names('dashboard.cases');
     Route::resource('projects', ProjectController::class)->names('dashboard.projects');
     Route::resource('advocates', AdvocateController::class)->names('dashboard.advocates');
+    Route::resource('companies', CompanyController::class)->names('dashboard.companies');
     Route::get('histories/old', [HistoryController::class, 'oldHistories'])->name('dashboard.histories.old');
+    Route::get('histories/nispotti', [HistoryController::class, 'nispottiHistories'])->name('dashboard.histories.nispotti');
     Route::resource('histories', HistoryController::class)->names('dashboard.histories');
 
     Route::resource('reports/filter', FilterController::class)->names('dashboard.reports.filter');

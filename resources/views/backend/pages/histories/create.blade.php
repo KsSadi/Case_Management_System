@@ -87,8 +87,18 @@
                         <div class="mt-3">
                             <label class="flex flex-col sm:flex-row"> বর্তমান অবস্থা/করণীয়/মন্তব্য </label>
                             <input type="text" id="status"   @if(isset($history))value="{{$history->status}}" @endif  name="status" class="input w-full border mt-2" placeholder="">
+                        </div>                        <div class="mt-4 flex items-center">
+                            <input type="checkbox" id="is_nispotti" name="is_nispotti" value="1"
+                                class="input border mr-2" style="width:20px;height:20px;"
+                                @if(isset($history) && $history->is_nispotti) checked @endif>
+                            <label for="is_nispotti" class="font-medium text-theme-6 cursor-pointer">নিষ্পত্তি (মামলা নিষ্পত্তি হয়েছে)</label>
                         </div>
-
+                        <div class="mt-3" id="nispotti_date_row" style="display:none;">
+                            <label class="flex flex-col sm:flex-row"> নিষ্পত্তির তারিখ </label>
+                            <input type="date" id="nispotti_date" name="nispotti_date"
+                                @if(isset($history) && $history->nispotti_date) value="{{ $history->nispotti_date }}" @endif
+                                class="input w-full border mt-2" placeholder="">
+                        </div>
                         <button type="submit" class="button bg-theme-1 text-white mt-5"   /> @if(isset($history)) Update @else Create @endif </button>
                     </form>
                 </div>
@@ -102,12 +112,36 @@
     <script>
         $(document).ready(function(){
 
+            // Toggle next_date / nispotti_date based on নিষ্পত্তি checkbox
+            function toggleNextDate() {
+                if ($('#is_nispotti').is(':checked')) {
+                    $('#next_date').val('').prop('disabled', true).closest('.mt-3').hide();
+                    $('#nispotti_date_row').show();
+                    $('#nispotti_date').prop('disabled', false);
+                } else {
+                    $('#next_date').prop('disabled', false).closest('.mt-3').show();
+                    $('#nispotti_date_row').hide();
+                    $('#nispotti_date').val('').prop('disabled', true);
+                }
+            }
+            toggleNextDate();
+            $('#is_nispotti').on('change', toggleNextDate);
+
             var form=$('#submit-form');
             form.on('submit',function (e) {
                 e.preventDefault();
 
                 var _token = $("input[name='_token']").val();
+                // Temporarily enable disabled fields so they are serialized
+                $('#next_date').prop('disabled', false);
+                $('#nispotti_date').prop('disabled', false);
                 var data = form.serialize();
+                // Re-apply disabled state
+                if ($('#is_nispotti').is(':checked')) {
+                    $('#next_date').prop('disabled', true);
+                } else {
+                    $('#nispotti_date').prop('disabled', true);
+                }
                 @if(isset($history))
                 var actionurl = "{{route('dashboard.histories.update',$history->id)}}";
                 @else
@@ -125,17 +159,9 @@
                                 'Success!',
                                 data.msg,
                                 'success'
-                            )
-                            @if(!isset($history))
-                            $('#case_id').val('')
-                            $('#past_date').val('')
-                            $('#date').val('')
-                            $('#next_date').val('')
-                            $('#status').val('')
-
-                            @endif
-
-
+                            ).then(function() {
+                                window.location.href = "{{ route('dashboard.histories.index') }}";
+                            });
                         }else {
                             Swal.fire(
                                 'Good job!',
@@ -143,9 +169,6 @@
                                 'success'
                             )
                         }
-
-
-
                     }
                 });
             })

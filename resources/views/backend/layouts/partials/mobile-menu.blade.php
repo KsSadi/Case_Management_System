@@ -22,30 +22,14 @@
         <li class="menu__devider my-6"></li>
         @if (Auth::guard('admin')->user()->can('history.view'))
             <li>
-                <a href="javascript:;" class="menu
+                <a href="{{ route('dashboard.histories.index') }}" class="menu
                                             @if (Request::is('dashboard/histories*'))
                     menu--active
 @endif
                     ">
                     <div class="menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg> </div>
-                    <div class="menu__title"> Case History <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                    <div class="menu__title"> Case History </div>
                 </a>
-                <ul class="">
-                    <li>
-                        <a href="{{ route('dashboard.histories.index') }}" class="menu">
-                            <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list mx-auto"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg> </div>
-                            <div class="menu__title"> View All Cases </div>
-                        </a>
-                    </li>
-                    @if (Auth::guard('admin')->user()->can('history.create'))
-                        <li>
-                            <a href="{{ route('dashboard.histories.create') }}" class="menu">
-                                <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> </div>
-                                <div class="menu__title"> Create History </div>
-                            </a>
-                        </li>
-                    @endif
-                </ul>
             </li>
         @endif
 
@@ -96,177 +80,81 @@
         <li class=""></li>
         @if (Auth::guard('admin')->user()->can('case.view'))
             <li>
-                <a href="javascript:;" class="menu
+                <a href="{{ route('dashboard.cases.index') }}" class="menu
                                             @if (Request::is('dashboard/cases*'))
                     menu--active
 @endif
                     ">
                     <div class="menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>   </div>
-                    <div class="menu__title"> Case Item <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                    <div class="menu__title"> Case Item </div>
                 </a>
-                <ul class="">
-                    <li>
-                        <a href="{{ route('dashboard.cases.index') }}" class="menu">
-                            <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list mx-auto"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg> </div>
-                            <div class="menu__title"> View Cases Item </div>
-                        </a>
-                    </li>
-                    @if (Auth::guard('admin')->user()->can('case.create'))
-                        <li>
-                            <a href="{{ route('dashboard.cases.create') }}" class="menu">
-                                <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> </div>
-                                <div class="menu__title"> Create Case </div>
-                            </a>
-                        </li>
-                    @endif
-                </ul>
             </li>
         @endif
         @if (Auth::guard('admin')->user()->can('project.view'))
             <li>
-                <a href="javascript:;" class="menu
+                <a href="{{ route('dashboard.projects.index') }}" class="menu
                                             @if (Request::is('dashboard/projects*'))
                     menu--active
 @endif
                     ">
                     <div class="menu__icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-aperture"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg></div>
-                    <div class="menu__title"> Project <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                    <div class="menu__title"> Project </div>
                 </a>
-                <ul class="">
-                    <li>
-                        <a href="{{ route('dashboard.projects.index') }}" class="menu">
-                            <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list mx-auto"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg> </div>
-                            <div class="menu__title"> View Project </div>
-                        </a>
-                    </li>
-                    @if (Auth::guard('admin')->user()->can('project.create'))
-                        <li>
-                            <a href="{{ route('dashboard.projects.create') }}" class="menu">
-                                <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> </div>
-                                <div class="menu__title"> Create Project </div>
-                            </a>
-                        </li>
-                    @endif
-                </ul>
             </li>
         @endif
         <li class=""></li>
 
         @if (Auth::guard('admin')->user()->can('type.view'))
             <li>
-                <a href="javascript:;" class="menu
+                <a href="{{ route('dashboard.types.index') }}" class="menu
                                             @if (Request::is('dashboard/types*'))
                     menu--active
 @endif
                     ">
                     <div class="menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg> </div>
-                    <div class="menu__title"> Case Type <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                    <div class="menu__title"> Case Type </div>
                 </a>
-                <ul class="">
-                    <li>
-                        <a href="{{ route('dashboard.types.index') }}" class="menu">
-                            <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list mx-auto"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg> </div>
-                            <div class="menu__title"> View Case Type </div>
-                        </a>
-                    </li>
-                    @if (Auth::guard('admin')->user()->can('type.create'))
-                        <li>
-                            <a href="{{ route('dashboard.types.create') }}" class="menu">
-                                <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> </div>
-                                <div class="menu__title"> Create Case Type </div>
-                            </a>
-                        </li>
-                    @endif
-                </ul>
             </li>
         @endif
         <li class=""></li>
         @if (Auth::guard('admin')->user()->can('division.view'))
             <li>
-                <a href="javascript:;" class="menu
+                <a href="{{ route('dashboard.divisions.index') }}" class="menu
                                             @if (Request::is('dashboard/divisions*'))
                     menu--active
 @endif
                     ">
                     <div class="menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg> </div>
-                    <div class="menu__title"> Case Division <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                    <div class="menu__title"> Case Division </div>
                 </a>
-                <ul class="">
-                    <li>
-                        <a href="{{ route('dashboard.divisions.index') }}" class="menu">
-                            <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list mx-auto"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg> </div>
-                            <div class="menu__title"> View Case Division </div>
-                        </a>
-                    </li>
-                    @if (Auth::guard('admin')->user()->can('division.create'))
-                        <li>
-                            <a href="{{ route('dashboard.divisions.create') }}" class="menu">
-                                <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> </div>
-                                <div class="menu__title"> Create Case Division </div>
-                            </a>
-                        </li>
-                    @endif
-                </ul>
             </li>
         @endif
 
         <li class=""></li>
         @if (Auth::guard('admin')->user()->can('court.view'))
             <li>
-                <a href="javascript:;" class="menu
+                <a href="{{ route('dashboard.courts.index') }}" class="menu
                                             @if (Request::is('dashboard/courts*'))
                     menu--active
 @endif
                     ">
                     <div class="menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> </div>
-                    <div class="menu__title"> Court Name <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                    <div class="menu__title"> Court Name </div>
                 </a>
-                <ul class="">
-                    <li>
-                        <a href="{{ route('dashboard.courts.index') }}" class="menu">
-                            <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list mx-auto"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg> </div>
-                            <div class="menu__title"> View Court Name </div>
-                        </a>
-                    </li>
-                    @if (Auth::guard('admin')->user()->can('court.create'))
-                        <li>
-                            <a href="{{ route('dashboard.courts.create') }}" class="menu">
-                                <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> </div>
-                                <div class="menu__title"> Create Court Name </div>
-                            </a>
-                        </li>
-                    @endif
-                </ul>
             </li>
         @endif
         @if (Auth::guard('admin')->user()->can('advocate.view'))
             <li>
-                <a href="javascript:;" class="menu
+                <a href="{{ route('dashboard.advocates.index') }}" class="menu
                                             @if (Request::is('dashboard/advocates*'))
                     menu--active
 @endif
                     ">
                     <div class="menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-check"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
                     </div>
-                    <div class="menu__title"> Advocate <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                    <div class="menu__title"> Advocate </div>
                 </a>
-                <ul class="">
-                    <li>
-                        <a href="{{ route('dashboard.advocates.index') }}" class="menu">
-                            <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list mx-auto"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg> </div>
-                            <div class="menu__title"> View Advocate </div>
-                        </a>
-                    </li>
-                    @if (Auth::guard('admin')->user()->can('advocate.create'))
-                        <li>
-                            <a href="{{ route('dashboard.advocates.create') }}" class="menu">
-                                <div class="menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> </div>
-                                <div class="menu__title"> Create Advocate </div>
-                            </a>
-                        </li>
-                    @endif
-                </ul>
             </li>
         @endif
 

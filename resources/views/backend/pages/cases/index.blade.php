@@ -25,8 +25,9 @@
                     <th class="whitespace-no-wrap hidden md:table-cell">প্রজেক্টের নাম</th>
                     <th class="whitespace-no-wrap hidden lg:table-cell">মামলার বিভাগ</th>
                     <th class="whitespace-no-wrap hidden lg:table-cell">মামলার ধরন</th>
-                    <th class="whitespace-no-wrap hidden xl:table-cell">বিচারাধীন বিজ্ঞ আদালতের নাম</th>
-                    <th class="whitespace-no-wrap hidden md:table-cell">নিয়োজিত আইনজীবীর নাম</th>
+                    <th class="whitespace-no-wrap hidden xl:table-cell">আদালতের নাম</th>
+                    <th class="whitespace-no-wrap hidden md:table-cell">আইনজীবীর নাম</th>
+                    <th class="whitespace-no-wrap hidden md:table-cell">কোম্পানির নাম</th>
                     <th class="text-center whitespace-no-wrap">ACTIONS</th>
 
             </tr>
@@ -82,6 +83,9 @@
                             @else
                                 Not Found
                             @endif </span>
+                    </td>
+                    <td class="hidden md:table-cell">
+                        <span class="font-medium">{{ $case->companies?->name ?? '—' }}</span>
                     </td>
 
 

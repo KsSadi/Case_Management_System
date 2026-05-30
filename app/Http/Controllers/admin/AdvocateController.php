@@ -24,14 +24,30 @@ class AdvocateController extends Controller
             return $next($request);
         });
     }
-    public function index()
+    public function index(Request $request)
     {
         if (is_null($this->user) || !$this->user->can('advocate.view')) {
             abort(403, 'Unauthorized Access!');
         }
 
-       $advocates=Advocate::all();
-        return view('backend.pages.advocates.index', compact('advocates'));
+        $search = $request->get('search');
+        
+        $advocates = Advocate::when($search, function($query) use ($search) {
+                return $query->where('name', 'like', '%' . $search . '%');
+            })
+            ->orderBy('name', 'asc')
+            ->paginate(10);
+        
+        // Handle AJAX request
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('backend.pages.advocates.partials.table-rows', compact('advocates'))->render(),
+                'pagination' => view('backend.pages.advocates.partials.pagination', compact('advocates', 'search'))->render(),
+                'summary' => view('backend.pages.advocates.partials.summary', compact('advocates', 'search'))->render()
+            ]);
+        }
+            
+        return view('backend.pages.advocates.index', compact('advocates', 'search'));
     }
 
     /**

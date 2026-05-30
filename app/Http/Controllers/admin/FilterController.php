@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Advocate;
+use App\Models\Company;
 use App\Models\Court;
 use App\Models\Division;
 use App\Models\History;
@@ -37,9 +38,11 @@ class FilterController extends Controller
         $courts=Court::all();
         $types= Type::all();
         $advocates=Advocate::all();
+        $companies=Company::orderBy('name')->get();
         $histories = History::all();
+        $appliedFilters = [];
 
-        return view('backend.pages.reports.filters.index',compact('projects','divisions','courts','types','advocates','histories'));
+        return view('backend.pages.reports.filters.index',compact('projects','divisions','courts','types','advocates','companies','histories','appliedFilters'));
     }
 
     /**
@@ -69,6 +72,7 @@ class FilterController extends Controller
         $courts    = Court::all();
         $types     = Type::all();
         $advocates = Advocate::all();
+        $companies = Company::orderBy('name')->get();
 
         $query = History::query();
 
@@ -87,10 +91,52 @@ class FilterController extends Controller
         if ($request->filled('adv_name')) {
             $query->whereHas('cases', fn($q) => $q->where('adv_name', $request->adv_name));
         }
+        if ($request->filled('company_id')) {
+            $query->whereHas('cases', fn($q) => $q->where('company_id', $request->company_id));
+        }
 
-        $histories = $query->get();
+        // নিষ্পত্তি filter
+        if ($request->nispotti_status === 'nispotti') {
+            $query->where('is_nispotti', true);
+        } elseif ($request->nispotti_status === 'active') {
+            $query->where('is_nispotti', false);
+        }
 
-        return view('backend.pages.reports.filters.index', compact('projects', 'divisions', 'courts', 'types', 'advocates', 'histories'));
+        $histories = $query->with('cases.companies')->get();
+
+        // Build applied filter labels for print header
+        $appliedFilters = [];
+        if ($request->filled('project')) {
+            $p = Project::find($request->project);
+            if ($p) $appliedFilters['প্রজেক্ট'] = $p->name;
+        }
+        if ($request->filled('division')) {
+            $d = Division::find($request->division);
+            if ($d) $appliedFilters['বিভাগ'] = $d->name;
+        }
+        if ($request->filled('case_type')) {
+            $t = Type::find($request->case_type);
+            if ($t) $appliedFilters['মামলার ধরন'] = $t->name;
+        }
+        if ($request->filled('court_name')) {
+            $c = Court::find($request->court_name);
+            if ($c) $appliedFilters['আদালত'] = $c->name;
+        }
+        if ($request->filled('adv_name')) {
+            $a = Advocate::find($request->adv_name);
+            if ($a) $appliedFilters['আইনজীবী'] = $a->name;
+        }
+        if ($request->filled('company_id')) {
+            $co = Company::find($request->company_id);
+            if ($co) $appliedFilters['কোম্পানি'] = $co->name;
+        }
+        if ($request->nispotti_status === 'nispotti') {
+            $appliedFilters['অবস্থা'] = 'শুধু নিষ্পত্তি মামলা';
+        } elseif ($request->nispotti_status === 'active') {
+            $appliedFilters['অবস্থা'] = 'চলমান মামলা';
+        }
+
+        return view('backend.pages.reports.filters.index', compact('projects', 'divisions', 'courts', 'types', 'advocates', 'companies', 'histories', 'appliedFilters'));
     }
 
     /**
