@@ -1,9 +1,44 @@
 <!-- Start : Datatable -->
 
-<div class="intro-y datatable-wrapper box p-5 mt-5" id="date-range">
+<div class="intro-y datatable-wrapper box p-5 mt-5" id="print-section">
 
+    <!-- Print Header (only visible when printing) -->
+    <div id="print-header" style="display:none;">
+        <div style="text-align:center; border-bottom: 2px solid #333; padding-bottom: 12px; margin-bottom: 14px;">
+            <h1 style="font-size: 20px; font-weight: bold; margin: 0 0 4px 0;">মামলার তালিকা</h1>
+            <h2 style="font-size: 14px; font-weight: normal; color: #444; margin: 0 0 6px 0;">Date Range Report</h2>
+            <p style="font-size: 11px; color: #666; margin: 0;">মুদ্রণের তারিখ: <span id="print-date"></span> &nbsp;|&nbsp; মোট রেকর্ড: <strong>{{ count($historydates) }}</strong></p>
+        </div>
+        @if(request('start_date') || request('end_date'))
+        <div style="margin-bottom: 12px; padding: 8px 12px; background: #f5f5f5; border-left: 4px solid #333; font-size: 11px;">
+            <span style="display:inline-block; margin-right:16px;">
+                <span style="color:#555;">শুরুর তারিখ:</span>
+                <strong>{{ request('start_date') ? \Carbon\Carbon::parse(request('start_date'))->format('d F Y') : '—' }}</strong>
+            </span>
+            <span style="display:inline-block; margin-right:16px;">
+                <span style="color:#555;">শেষ তারিখ:</span>
+                <strong>{{ request('end_date') ? \Carbon\Carbon::parse(request('end_date'))->format('d F Y') : '—' }}</strong>
+            </span>
+        </div>
+        @endif
+    </div>
 
-    <table class="table table-report table-report--bordered display datatable w-full">
+    <!-- Print Button -->
+    @if(count($historydates) > 0)
+    <div class="flex justify-end mb-3 no-print">
+        <button onclick="printDateTable()" class="button flex items-center bg-gray-700 text-white">
+            <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <rect x="6" y="14" width="12" height="8"></rect>
+            </svg>
+            প্রিন্ট করুন ({{ count($historydates) }} টি রেকর্ড)
+        </button>
+    </div>
+    @endif
+
+    <div class="overflow-x-auto">
+    <table class="table table-report table-report--bordered display datatable w-full" id="result-table">
         <thead>
         <tr>
 
@@ -12,10 +47,11 @@
             <th class="whitespace-no-wrap">প্রজেক্টের নাম</th>
             <th class="whitespace-no-wrap">মামলার বিভাগ</th>
             <th class="whitespace-no-wrap">মামলার ধরন</th>
-            <th class="whitespace-no-wrap">বিচারাধীন বিজ্ঞ আদালতের নাম</th>
-            <th class="whitespace-no-wrap">কোম্পানির নিয়োজিত বিজ্ঞ আইনজীবীর নাম</th>
+            <th class="whitespace-no-wrap">আদালতের নাম</th>
+            <th class="whitespace-no-wrap">আইনজীবীর নাম</th>
+            <th class="whitespace-no-wrap">কোম্পানির নাম</th>
             <th class="whitespace-no-wrap">পরবর্তী তারিখ</th>
-            <th class="text-center whitespace-no-wrap">ACTIONS</th>
+            <th class="text-center whitespace-no-wrap no-print">ACTIONS</th>
 
         </tr>
         </thead>
@@ -28,7 +64,7 @@
 
 
                 <td>
-                    <span href="" class="font-medium">{{ $historydate->id }}</span>
+                    <span href="" class="font-medium">{{ $loop->iteration }}</span>
 
                 </td>
                 <td>
@@ -43,7 +79,7 @@
                 </td>
                 <td>
                         <span href="" class="font-medium">@if($historydate->cases)
-                                {{ $historydate->cases->projects->name}}
+                                {{ optional($historydate->cases->projects)->name }}
                             @else
                                 Not Found
                             @endif</span>
@@ -51,7 +87,7 @@
                 </td>
                 <td>
                         <span href="" class="font-medium">@if($historydate->cases)
-                                {{ $historydate->cases->divisions->name}}
+                                {{ optional($historydate->cases->divisions)->name }}
                             @else
                                 Not Found
                             @endif</span>
@@ -59,7 +95,7 @@
                 </td>
                 <td>
                         <span href="" class="font-medium">@if($historydate->cases)
-                                {{ $historydate->cases->types->name }}
+                                {{ optional($historydate->cases->types)->name }}
                             @else
                                 Not Found
                             @endif</span>
@@ -67,7 +103,7 @@
                 </td>
                 <td>
                         <span href="" class="font-medium">@if($historydate->cases)
-                                {{ $historydate->cases->courts->name }}
+                                {{ optional($historydate->cases->courts)->name }}
                             @else
                                 Not Found
                             @endif</span>
@@ -75,19 +111,24 @@
                 </td>
                 <td>
                         <span href="" class="font-medium"> @if($historydate->cases)
-                                {{ $historydate->cases->advocates->name }}
+                                {{ optional($historydate->cases->advocates)->name }}
                             @else
                                 Not Found
                             @endif </span>
 
                 </td>
                 <td>
-                    <span href="" class="font-medium">{{ $historydate->next_date }}</span>
+                    <span class="font-medium">{{ optional(optional($historydate->cases)->companies)->name ?? '—' }}</span>
+
+                </td>
+                <td>
+                    <span href="" class="font-medium no-print">{{ $historydate->next_date ? \Carbon\Carbon::parse($historydate->next_date)->format('d/m/y') : '' }}</span>
+                    <span class="font-medium print-only" style="display:none;">{{ $historydate->next_date ? \Carbon\Carbon::parse($historydate->next_date)->format('d F Y') : '' }}</span>
 
                 </td>
 
 
-                <td class="table-report__action w-56">
+                <td class="table-report__action w-56 no-print">
                     <div class="flex justify-center items-center">
                         <a class="flex items-center mr-3"
                            href="{{ route('dashboard.histories.edit', $historydate->id) }}">
@@ -128,3 +169,74 @@
     </table>
 </div>
 <!-- END: Datatable -->
+
+<style>
+@media print {
+    /* Hide everything */
+    body * { visibility: hidden; }
+
+    /* Show only print section */
+    #print-section, #print-section * { visibility: visible; }
+    #print-section { position: absolute; top: 0; left: 0; width: 100%; padding: 20px; }
+
+    /* Show print header */
+    #print-header { display: block !important; }
+
+    /* Hide non-print elements */
+    .no-print { display: none !important; }
+
+    /* Show print-only elements */
+    .print-only { display: inline !important; }
+
+    /* Hide DataTable controls */
+    .dataTables_length,
+    .dataTables_filter,
+    .dataTables_info,
+    .dataTables_paginate,
+    .dataTables_wrapper .row:first-child,
+    .dataTables_wrapper .row:last-child { display: none !important; }
+
+    /* Table styling for print */
+    #result-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    #result-table th, #result-table td {
+        border: 1px solid #333;
+        padding: 5px 8px;
+        text-align: left;
+        word-break: break-word;
+    }
+    #result-table thead tr { background-color: #f0f0f0 !important; -webkit-print-color-adjust: exact; }
+    #result-table tbody tr:nth-child(even) { background-color: #fafafa !important; -webkit-print-color-adjust: exact; }
+
+    @page { margin: 15mm; size: A4 landscape; }
+}
+</style>
+
+<script>
+function printDateTable() {
+    var printDateEl = document.getElementById('print-date');
+    if (printDateEl) {
+        printDateEl.textContent = new Date().toLocaleDateString('bn-BD', {
+            year: 'numeric', month: 'long', day: 'numeric'
+        });
+    }
+
+    var hasDataTable = $.fn.dataTable && $.fn.dataTable.isDataTable('#result-table');
+
+    if (hasDataTable) {
+        // Show ALL rows in DataTable before printing
+        var table = $('#result-table').DataTable();
+        var prevLen = table.page.len();
+        table.page.len(-1).draw();  // -1 = show all
+
+        setTimeout(function () {
+            window.print();
+            // Restore original page length after print dialog closes
+            table.page.len(prevLen).draw();
+        }, 400);
+    } else {
+        setTimeout(function () {
+            window.print();
+        }, 200);
+    }
+}
+</script>

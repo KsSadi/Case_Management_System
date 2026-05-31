@@ -21,19 +21,22 @@ class MonthController extends Controller
 
     }
 
-    public function index()
+    public function index(Request $request)
     {
         if (is_null($this->user) || !$this->user->can('report.month')) {
             abort(403, 'Unauthorized Access!');
         }
-        $histories=History::whereMonth('date', date('m'))
-            ->whereYear('date', date('Y'))->get();
 
-        $date_m = Carbon::now();
+        $month = (int) $request->input('month', date('m'));
+        $year  = (int) $request->input('year', date('Y'));
 
-        $month_name = $date_m->format('F');
+        $histories = History::whereMonth('next_date', $month)
+            ->whereYear('next_date', $year)
+            ->get();
 
-        return view('backend.pages.reports.months.index', compact('histories','month_name'));
+        $month_name = Carbon::createFromDate($year, $month, 1)->format('F');
+
+        return view('backend.pages.reports.months.index', compact('histories', 'month_name', 'month', 'year'));
 
 
     }

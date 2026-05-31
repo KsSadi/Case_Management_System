@@ -20,11 +20,13 @@
                 <div class="preview" style="">
                     <div class="flex flex-col sm:flex-row items-center">
                         <label class="w-full sm:w-20 sm:text-right sm:mr-5">Start Date </label>
-                        <input type="date" class="input w-full border mt-2 flex-1" placeholder="" id="start_date" name="start_date" required>
+                        <input type="text" autocomplete="off" class="input w-full border mt-2 flex-1" placeholder="dd/mm/yyyy" id="start_date_display">
+                        <input type="hidden" id="start_date" name="start_date" required>
                     </div>
                     <div class="flex flex-col sm:flex-row items-center">
                         <label class="w-full sm:w-20 sm:text-right sm:mr-5">End Date </label>
-                        <input type="date" class="input w-full border mt-2 flex-1" placeholder=""  id="end_date" name="end_date" required>
+                        <input type="text" autocomplete="off" class="input w-full border mt-2 flex-1" placeholder="dd/mm/yyyy" id="end_date_display">
+                        <input type="hidden" id="end_date" name="end_date" required>
                     </div>
 
 
@@ -41,6 +43,31 @@
 
     <script>
         $(document).ready(function(){
+
+            // Initialize dd/mm/yyyy date pickers; hidden inputs keep YYYY-MM-DD for the backend
+            function initDatePicker(displayId, hiddenId) {
+                $('#' + displayId).daterangepicker({
+                    singleDatePicker: true,
+                    autoUpdateInput: false,
+                    locale: {
+                        format: 'DD/MM/YYYY',
+                        cancelLabel: 'Clear'
+                    }
+                });
+
+                $('#' + displayId).on('apply.daterangepicker', function (ev, picker) {
+                    $(this).val(picker.startDate.format('DD/MM/YYYY'));
+                    $('#' + hiddenId).val(picker.startDate.format('YYYY-MM-DD'));
+                });
+
+                $('#' + displayId).on('cancel.daterangepicker', function () {
+                    $(this).val('');
+                    $('#' + hiddenId).val('');
+                });
+            }
+
+            initDatePicker('start_date_display', 'start_date');
+            initDatePicker('end_date_display', 'end_date');
 
             var form=$('#date-range');
             form.on('submit',function (e) {
@@ -61,9 +88,14 @@
                         data: formdata,
                         success: function(data) {
                             $("#table-container").html(data.html);
+
+                            // Destroy any existing DataTable instance then re-init for pagination
+                            if ($.fn.dataTable && $.fn.dataTable.isDataTable('#result-table')) {
+                                $('#result-table').DataTable().destroy();
+                            }
+                            $('#result-table').DataTable({ responsive: true });
+
                             console.log(data)
-
-
                         }
                     });
 
