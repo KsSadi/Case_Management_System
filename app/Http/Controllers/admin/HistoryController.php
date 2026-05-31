@@ -132,7 +132,7 @@ class HistoryController extends Controller
                 'case_id'   => 'required|integer',
                 'date'      => 'required|date',
                 'past_date' => 'required|date',
-                'status'    => 'required|string|max:255',
+                'status'    => 'nullable|string|max:255',
             ];
             if ($isNispotti) {
                 $rules['nispotti_date'] = 'required|date';
@@ -213,7 +213,7 @@ class HistoryController extends Controller
             $rules = [
                 'date'      => 'required|date',
                 'past_date' => 'required|date',
-                'status'    => 'required|string|max:255',
+                'status'    => 'nullable|string|max:255',
             ];
             if ($isNispotti) {
                 $rules['nispotti_date'] = 'required|date';
