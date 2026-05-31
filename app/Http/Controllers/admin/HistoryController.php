@@ -206,12 +206,6 @@ class HistoryController extends Controller
             abort(403, 'Unauthorized Access!');
         }
 
-    public function update(Request $request, $id)
-    {
-        if (is_null($this->user) || !$this->user->can('history.edit')) {
-            abort(403, 'Unauthorized Access!');
-        }
-
         $history = History::findOrFail($id);
         try {
             $isNispotti = $request->has('is_nispotti') ? 1 : 0;
@@ -243,9 +237,6 @@ class HistoryController extends Controller
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'msg' => 'Failed Updating Case History !!'], 500);
         }
-    }
-
-
     }
 
     /**
