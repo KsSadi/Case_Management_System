@@ -7,7 +7,7 @@ use App\Models\CaseItem;
 use App\Models\History;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use mysql_xdevapi\Exception;
+use Illuminate\Validation\ValidationException;
 
 class HistoryController extends Controller
 {
@@ -125,22 +125,36 @@ class HistoryController extends Controller
         if (is_null($this->user) || !$this->user->can('history.create')) {
             abort(403, 'Unauthorized Access!');
         }
-        try{
-            $data = $request->all();
-            $data['is_nispotti'] = $request->has('is_nispotti') ? 1 : 0;
-            if ($data['is_nispotti']) {
-                $data['next_date'] = null;
+        try {
+            $isNispotti = $request->has('is_nispotti') ? 1 : 0;
+
+            $rules = [
+                'case_id'   => 'required|integer',
+                'date'      => 'required|date',
+                'past_date' => 'required|date',
+                'status'    => 'required|string|max:255',
+            ];
+            if ($isNispotti) {
+                $rules['nispotti_date'] = 'required|date';
             } else {
-                $data['nispotti_date'] = null;
+                $rules['next_date'] = 'required|date';
             }
-            $history=History::create($data);
-            return ['status'=>'success','data'=>$history,'msg'=>' Case History has been Created !!'];
+            $validated = $request->validate($rules);
 
+            $validated['is_nispotti'] = $isNispotti;
+            if ($isNispotti) {
+                $validated['next_date'] = null;
+            } else {
+                $validated['nispotti_date'] = null;
+            }
 
-        }
-        catch (Exception $exception) {
+            $history = History::create($validated);
+            return ['status' => 'success', 'data' => $history, 'msg' => 'Case History has been Created !!'];
 
-            return redirect() ->back()->with('failed','Failed Creating Case History !!');
+        } catch (ValidationException $e) {
+            return response()->json(['status' => 'error', 'msg' => implode(' ', $e->validator->errors()->all())], 422);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'msg' => 'Failed Creating Case History !!'], 500);
         }
     }
 
@@ -192,23 +206,44 @@ class HistoryController extends Controller
             abort(403, 'Unauthorized Access!');
         }
 
+    public function update(Request $request, $id)
+    {
+        if (is_null($this->user) || !$this->user->can('history.edit')) {
+            abort(403, 'Unauthorized Access!');
+        }
+
         $history = History::findOrFail($id);
         try {
-            $data = $request->all();
-            $data['is_nispotti'] = $request->has('is_nispotti') ? 1 : 0;
-            if ($data['is_nispotti']) {
-                $data['next_date'] = null;
+            $isNispotti = $request->has('is_nispotti') ? 1 : 0;
+
+            $rules = [
+                'date'      => 'required|date',
+                'past_date' => 'required|date',
+                'status'    => 'required|string|max:255',
+            ];
+            if ($isNispotti) {
+                $rules['nispotti_date'] = 'required|date';
             } else {
-                $data['nispotti_date'] = null;
+                $rules['next_date'] = 'required|date';
             }
-            $history->update($data);
-            return ['status'=>'success','data'=>$history,'msg'=>' Case History has been Updated !!'];
+            $validated = $request->validate($rules);
 
-        }
-        catch (Exception $exception) {
+            $validated['is_nispotti'] = $isNispotti;
+            if ($isNispotti) {
+                $validated['next_date'] = null;
+            } else {
+                $validated['nispotti_date'] = null;
+            }
 
-            return redirect() ->back()->with('failed','Failed Updating Case History!!');
+            $history->update($validated);
+            return ['status' => 'success', 'data' => $history, 'msg' => 'Case History has been Updated !!'];
+
+        } catch (ValidationException $e) {
+            return response()->json(['status' => 'error', 'msg' => implode(' ', $e->validator->errors()->all())], 422);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'msg' => 'Failed Updating Case History !!'], 500);
         }
+    }
 
 
     }

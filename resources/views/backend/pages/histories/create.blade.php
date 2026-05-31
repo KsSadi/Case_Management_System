@@ -164,11 +164,18 @@
                             });
                         }else {
                             Swal.fire(
-                                'Good job!',
+                                'Error!',
                                 data.msg,
-                                'success'
+                                'error'
                             )
                         }
+                    },
+                    error: function(xhr) {
+                        var msg = 'Something went wrong!';
+                        if (xhr.responseJSON && xhr.responseJSON.msg) {
+                            msg = xhr.responseJSON.msg;
+                        }
+                        Swal.fire('Error!', msg, 'error');
                     }
                 });
             })
