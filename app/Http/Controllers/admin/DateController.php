@@ -29,7 +29,10 @@ class DateController extends Controller
         $from =$request->start_date;
         $to = $request->end_date;
 
-        $historydates = History::whereBetween('next_date', [$from, $to])->get();
+        $historydates = History::with('cases.companies')
+            ->whereBetween('next_date', [$from, $to])
+            ->orderBy('next_date', 'asc')
+            ->get();
 
         $view=view('backend.pages.reports.dates.include.table',compact('historydates'))->render();
         return ["status"=>'success','html'=>$view ];

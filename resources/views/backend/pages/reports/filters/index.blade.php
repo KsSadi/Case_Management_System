@@ -229,7 +229,7 @@ Case Filtering
                     <td>
                         <span class="font-medium">{{ $history->cases?->companies?->name ?? '—' }}</span>
                     </td>
-                    <td>
+                    <td data-order="{{ $history->is_nispotti ? ($history->nispotti_date ?? '') : ($history->next_date ?? '') }}">
                         @if($history->is_nispotti)
                             <div>
                                 <span class="px-2 py-1 rounded text-xs font-bold bg-green-100 text-green-800 border border-green-400">নিষ্পত্তি</span>
@@ -271,7 +271,27 @@ Case Filtering
 
     /* Show only print section */
     #print-section, #print-section * { visibility: visible; }
-    #print-section { position: absolute; top: 0; left: 0; width: 100%; padding: 20px; }
+
+    /* Reset layout wrappers to static block flow so they don't occupy space/margins */
+    .app, .flex, .content {
+        position: static !important;
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
+    #print-section {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
 
     /* Show print header */
     #print-header { display: block !important; }

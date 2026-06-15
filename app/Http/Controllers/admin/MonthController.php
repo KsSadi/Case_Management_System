@@ -30,8 +30,10 @@ class MonthController extends Controller
         $month = (int) $request->input('month', date('m'));
         $year  = (int) $request->input('year', date('Y'));
 
-        $histories = History::whereMonth('next_date', $month)
+        $histories = History::with('cases.companies')
+            ->whereMonth('next_date', $month)
             ->whereYear('next_date', $year)
+            ->orderBy('next_date', 'asc')
             ->get();
 
         $month_name = Carbon::createFromDate($year, $month, 1)->format('F');
@@ -45,11 +47,16 @@ class MonthController extends Controller
         if (is_null($this->user) || !$this->user->can('report.month')) {
             abort(403, 'Unauthorized Access!');
         }
-        $histories=History::whereMonth('created_at', '=',Carbon::now()->subMonth()->month)->get();
+        
+        $lastMonthDate = Carbon::now()->subMonth();
 
-        $date = \Carbon\Carbon::now();
-        $lastMonth =  $date->subMonth()->format('F');
+        $histories = History::with('cases.companies')
+            ->whereMonth('next_date', '=', $lastMonthDate->month)
+            ->whereYear('next_date', '=', $lastMonthDate->year)
+            ->orderBy('next_date', 'asc')
+            ->get();
 
+        $lastMonth = $lastMonthDate->format('F');
 
         return view('backend.pages.reports.months.previous', compact('histories','lastMonth'));
 

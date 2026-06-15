@@ -39,7 +39,7 @@ class FilterController extends Controller
         $types= Type::all();
         $advocates=Advocate::all();
         $companies=Company::orderBy('name')->get();
-        $histories = History::all();
+        $histories = History::with('cases.companies')->orderBy('next_date', 'asc')->get();
         $appliedFilters = [];
 
         return view('backend.pages.reports.filters.index',compact('projects','divisions','courts','types','advocates','companies','histories','appliedFilters'));
@@ -102,7 +102,7 @@ class FilterController extends Controller
             $query->where('is_nispotti', false);
         }
 
-        $histories = $query->with('cases.companies')->get();
+        $histories = $query->with('cases.companies')->orderBy('next_date', 'asc')->get();
 
         // Build applied filter labels for print header
         $appliedFilters = [];

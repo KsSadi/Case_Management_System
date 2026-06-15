@@ -121,9 +121,9 @@
                     <span class="font-medium">{{ optional(optional($historydate->cases)->companies)->name ?? '—' }}</span>
 
                 </td>
-                <td>
-                    <span href="" class="font-medium no-print">{{ $historydate->next_date ? \Carbon\Carbon::parse($historydate->next_date)->format('d/m/y') : '' }}</span>
-                    <span class="font-medium print-only" style="display:none;">{{ $historydate->next_date ? \Carbon\Carbon::parse($historydate->next_date)->format('d F Y') : '' }}</span>
+                <td data-order="{{ $historydate->next_date ?? '' }}">
+                    <span href="" class="font-medium no-print">{{ $historydate->next_date ? \Carbon\Carbon::parse($historydate->next_date)->format('d M Y') : '' }}</span>
+                    <span class="font-medium print-only" style="display:none;">{{ $historydate->next_date ? \Carbon\Carbon::parse($historydate->next_date)->format('d M Y') : '' }}</span>
 
                 </td>
 
@@ -177,7 +177,27 @@
 
     /* Show only print section */
     #print-section, #print-section * { visibility: visible; }
-    #print-section { position: absolute; top: 0; left: 0; width: 100%; padding: 20px; }
+
+    /* Reset layout wrappers to static block flow so they don't occupy space/margins */
+    .app, .flex, .content {
+        position: static !important;
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
+    #print-section {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
 
     /* Show print header */
     #print-header { display: block !important; }

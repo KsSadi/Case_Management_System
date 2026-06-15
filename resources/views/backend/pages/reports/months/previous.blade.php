@@ -50,6 +50,7 @@
                 <th class="whitespace-no-wrap">মামলার ধরন</th>
                 <th class="whitespace-no-wrap">বিচারাধীন বিজ্ঞ আদালতের নাম</th>
                 <th class="whitespace-no-wrap">কোম্পানির নিয়োজিত বিজ্ঞ আইনজীবীর নাম</th>
+                <th class="whitespace-no-wrap">কোম্পানির নাম</th>
                 <th class="whitespace-no-wrap">পরবর্তী তারিখ </th>
                 <th class="text-center whitespace-no-wrap">ACTIONS</th>
 
@@ -64,12 +65,12 @@
 
 
                     <td>
-                        <span href="" class="font-medium">{{ $history->id }}</span>
+                        <span class="font-medium">{{ $loop->iteration }}</span>
 
                     </td>
                     <td>
                         <a class="flex items-center mr-3" href="{{ route('dashboard.histories.show', $history->id) }}">
-                            <span href="" class="font-medium">@if($history->cases)
+                            <span class="font-medium">@if($history->cases)
                                     {{ $history->cases->case_no}}
                                 @else
                                     Not Found
@@ -78,47 +79,50 @@
 
                     </td>
                     <td>
-                        <span href="" class="font-medium">@if($history->cases)
-                                {{ $history->cases->projects->name}}
+                        <span class="font-medium">@if($history->cases)
+                                {{ optional($history->cases->projects)->name }}
                             @else
                                 Not Found
                             @endif</span>
 
                     </td>
                     <td>
-                        <span href="" class="font-medium">@if($history->cases)
-                                {{ $history->cases->divisions->name}}
+                        <span class="font-medium">@if($history->cases)
+                                {{ optional($history->cases->divisions)->name }}
                             @else
                                 Not Found
                             @endif</span>
 
                     </td>
                     <td>
-                        <span href="" class="font-medium">@if($history->cases)
-                                {{ $history->cases->types->name }}
+                        <span class="font-medium">@if($history->cases)
+                                {{ optional($history->cases->types)->name }}
                             @else
                                 Not Found
                             @endif</span>
 
                     </td>
                     <td>
-                        <span href="" class="font-medium">@if($history->cases)
-                                {{ $history->cases->courts->name }}
+                        <span class="font-medium">@if($history->cases)
+                                {{ optional($history->cases->courts)->name }}
                             @else
                                 Not Found
                             @endif</span>
 
                     </td>
                     <td>
-                        <span href="" class="font-medium"> @if($history->cases)
-                                {{ $history->cases->advocates->name }}
+                        <span class="font-medium"> @if($history->cases)
+                                {{ optional($history->cases->advocates)->name }}
                             @else
                                 Not Found
                             @endif </span>
 
                     </td>
                     <td>
-                        <span href="" class="font-medium">{{ $history->next_date }}</span>
+                        <span class="font-medium">{{ optional(optional($history->cases)->companies)->name ?? '—' }}</span>
+                    </td>
+                    <td data-order="{{ $history->next_date ?? '' }}">
+                        <span class="font-medium">{{ $history->next_date ? \Carbon\Carbon::parse($history->next_date)->format('d M Y') : '' }}</span>
 
                     </td>
 
