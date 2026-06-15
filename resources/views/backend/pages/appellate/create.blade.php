@@ -33,6 +33,11 @@
                 </div>
 
                 <div class="mt-3">
+                    <label for="case_details" class="font-medium text-base">মামলার সংক্ষিপ্ত বিবরণ (Case Details)</label>
+                    <textarea id="case_details" name="case_details" class="input w-full border mt-2" rows="4" placeholder="Enter case details...">{{ $case->case_details ?? '' }}</textarea>
+                </div>
+
+                <div class="mt-3">
                     <label for="first_order" class="font-medium text-base">প্রথম আদেশ (1st Order)</label>
                     <textarea id="first_order" name="first_order" class="input w-full border mt-2" rows="4" placeholder="Enter first order details...">{{ $case->first_order ?? '' }}</textarea>
                 </div>

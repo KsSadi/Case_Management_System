@@ -14,6 +14,7 @@ class AppellateCase extends Model
     protected $fillable = [
         'case_no',
         'parties_name',
+        'case_details',
         'first_order',
         'last_order',
     ];

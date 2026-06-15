@@ -39,6 +39,10 @@
                         <td class="border">{{ $case->parties_name }}</td>
                     </tr>
                     <tr>
+                        <th class="border font-semibold bg-gray-100">মামলার সংক্ষিপ্ত বিবরণ (Case Details)</th>
+                        <td class="border" style="white-space: pre-wrap;">{{ $case->case_details ?? '—' }}</td>
+                    </tr>
+                    <tr>
                         <th class="border font-semibold bg-gray-100">প্রথম আদেশ (1st Order)</th>
                         <td class="border" style="white-space: pre-wrap;">{{ $case->first_order ?? '—' }}</td>
                     </tr>

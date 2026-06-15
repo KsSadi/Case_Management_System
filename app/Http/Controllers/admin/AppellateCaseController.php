@@ -47,6 +47,7 @@ class AppellateCaseController extends Controller
         $request->validate([
             'case_no'      => 'required|string|max:255',
             'parties_name' => 'required|string|max:255',
+            'case_details' => 'nullable|string',
             'first_order'  => 'nullable|string',
             'last_order'   => 'nullable|string',
         ]);
@@ -88,6 +89,7 @@ class AppellateCaseController extends Controller
         $request->validate([
             'case_no'      => 'required|string|max:255',
             'parties_name' => 'required|string|max:255',
+            'case_details' => 'nullable|string',
             'first_order'  => 'nullable|string',
             'last_order'   => 'nullable|string',
         ]);
