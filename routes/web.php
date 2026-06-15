@@ -18,6 +18,7 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\admin\HighCourtCaseController;
 use App\Http\Controllers\admin\AppellateCaseController;
+use App\Http\Controllers\admin\ImportantLinkController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -66,6 +67,9 @@ Route::group(['prefix' => 'dashboard'], function () {
     // Supreme Court
     Route::resource('supreme-court/high-court', HighCourtCaseController::class)->names('dashboard.supreme-court.high-court');
     Route::resource('supreme-court/appellate', AppellateCaseController::class)->names('dashboard.supreme-court.appellate');
+
+    // Important Links
+    Route::resource('important-links', ImportantLinkController::class)->names('dashboard.important-links');
 
     Route::get('histories/old', [HistoryController::class, 'oldHistories'])->name('dashboard.histories.old');
     Route::get('histories/nispotti', [HistoryController::class, 'nispottiHistories'])->name('dashboard.histories.nispotti');
