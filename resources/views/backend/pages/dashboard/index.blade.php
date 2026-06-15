@@ -218,7 +218,7 @@
 
 
                                 <td>
-                                    <span href="" class="font-medium">{{ $nextday->id }}</span>
+                                    <span class="font-medium">{{ $loop->iteration }}</span>
 
                                 </td>
                                 <td>
@@ -271,8 +271,8 @@
                             @endif </span>
 
                                 </td>
-                                <td>
-                                    <span href="" class="font-medium">{{ \Carbon\Carbon::parse($nextday->next_date)->format('d M Y') }}</span>
+                                <td data-order="{{ $nextday->next_date }}">
+                                    <span class="font-medium">{{ \Carbon\Carbon::parse($nextday->next_date)->format('d M Y') }}</span>
 
                                 </td>
 
