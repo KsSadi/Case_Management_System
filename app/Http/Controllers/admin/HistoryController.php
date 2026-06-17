@@ -83,7 +83,7 @@ class HistoryController extends Controller
                             ->select('id', 'case_id', 'date', 'past_date', 'next_date', 'status', 'is_nispotti')
                             ->where('is_nispotti', false)
                             ->whereDate('next_date', '<', now()->toDateString())
-                            ->orderBy('next_date', 'desc')
+                            ->orderBy('next_date', 'asc')
                             ->get();
         
         return view('backend.pages.histories.old', compact('histories'));

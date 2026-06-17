@@ -64,7 +64,7 @@
 
 
                     <td>
-                        <span class="font-medium">{{ $history->id }}</span>
+                        <span class="font-medium">{{ $loop->iteration }}</span>
 
                     </td>
                     <td>
@@ -117,7 +117,7 @@
                             @endif </span>
 
                     </td>
-                    <td>
+                    <td data-order="{{ $history->next_date ?? '' }}">
                         <span class="font-medium text-theme-6">{{ \Carbon\Carbon::parse($history->next_date)->format('d M Y') }}</span>
 
                     </td>

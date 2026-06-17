@@ -110,7 +110,7 @@
                         <td class="hidden md:table-cell">
                             <span class="font-medium">{{ $history->cases?->advocates?->name ?? 'Not Found' }}</span>
                         </td>
-                        <td>
+                        <td data-order="{{ $history->nispotti_date ?? '' }}">
                             @if($history->nispotti_date)
                                 <span class="font-medium text-green-700">{{ \Carbon\Carbon::parse($history->nispotti_date)->format('d M Y') }}</span>
                             @else

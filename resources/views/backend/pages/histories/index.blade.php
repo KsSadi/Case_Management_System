@@ -65,7 +65,7 @@
 
 
                     <td>
-                        <span href="" class="font-medium">{{ $history->id }}</span>
+                        <span class="font-medium">{{ $loop->iteration }}</span>
 
                     </td>
                     <td>
@@ -101,7 +101,7 @@
                     <td class="hidden md:table-cell">
                         <span class="font-medium">{{ $history->cases?->companies?->name ?? '—' }}</span>
                     </td>
-                    <td>
+                    <td data-order="{{ $isNispotti ? ($history->nispotti_date ?? '') : ($history->next_date ?? '') }}">
                         @if($isNispotti)
                             <div>
                                 <span class="px-2 py-1 rounded text-xs font-bold bg-green-100 text-green-800 border border-green-400">নিষ্পত্তি</span>
