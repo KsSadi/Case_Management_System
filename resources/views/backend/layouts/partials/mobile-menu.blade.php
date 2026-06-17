@@ -214,7 +214,7 @@
             </a>
         </li>
 
-        @if (Auth::guard('admin')->user()->can('role.view'))
+        @if (Auth::guard('admin')->user()->can('role.view') && !Auth::guard('admin')->user()->hasAnyRole(['viewer', 'admin']))
             <li>
                 <a href="javascript:;" class="menu
                                             @if (Request::is('dashboard/roles*'))
@@ -243,7 +243,7 @@
             </li>
         @endif
 
-        @if (Auth::guard('admin')->user()->can('admin.view'))
+        @if (Auth::guard('admin')->user()->can('admin.view') && !Auth::guard('admin')->user()->hasAnyRole(['viewer', 'admin']))
             <li>
                 <a href="javascript:;" class="menu
                                         @if (Request::is('dashboard/admins*'))

@@ -51,7 +51,9 @@
             <th class="whitespace-no-wrap">আইনজীবীর নাম</th>
             <th class="whitespace-no-wrap">কোম্পানির নাম</th>
             <th class="whitespace-no-wrap">পরবর্তী তারিখ</th>
+            @if (Auth::guard('admin')->user()->can('history.edit') || Auth::guard('admin')->user()->can('history.delete'))
             <th class="text-center whitespace-no-wrap no-print">ACTIONS</th>
+            @endif
 
         </tr>
         </thead>
@@ -128,8 +130,10 @@
                 </td>
 
 
+                @if (Auth::guard('admin')->user()->can('history.edit') || Auth::guard('admin')->user()->can('history.delete'))
                 <td class="table-report__action w-56 no-print">
                     <div class="flex justify-center items-center">
+                        @if (Auth::guard('admin')->user()->can('history.edit'))
                         <a class="flex items-center mr-3"
                            href="{{ route('dashboard.histories.edit', $historydate->id) }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -139,7 +143,9 @@
                                 <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
                             </svg>
                             Edit </a>
+                        @endif
 
+                        @if (Auth::guard('admin')->user()->can('history.delete'))
                         <a class="flex items-center text-theme-6"
                            href="{{ route('dashboard.histories.destroy', $historydate->id) }}"
                            onclick="event.preventDefault(); document.getElementById('delete-form-{{ $historydate->id }}').submit()">
@@ -159,8 +165,10 @@
                             @method('DELETE')
                             @csrf
                         </form>
+                        @endif
                     </div>
                 </td>
+                @endif
             </tr>
 
         @endforeach

@@ -10,6 +10,7 @@
 
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">Companies List</h2>
+    @if (Auth::guard('admin')->user()->can('company.create'))
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
         <a href="{{ route('dashboard.companies.create') }}" class="button w-full sm:w-auto flex items-center text-white bg-theme-1 shadow-md mr-2">
             <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -20,6 +21,7 @@
             New Company
         </a>
     </div>
+    @endif
 </div>
 
 <!-- Search Box -->
@@ -74,7 +76,9 @@
             <tr>
                 <th class="whitespace-no-wrap text-center" width="10%">ICON</th>
                 <th class="whitespace-no-wrap">COMPANY NAME</th>
+                @if (Auth::guard('admin')->user()->can('company.edit') || Auth::guard('admin')->user()->can('company.delete'))
                 <th class="text-center whitespace-no-wrap">ACTIONS</th>
+                @endif
             </tr>
         </thead>
         <tbody id="companies-table-body">
@@ -93,8 +97,10 @@
                 <td>
                     <span class="font-medium whitespace-no-wrap">{{ $company->name }}</span>
                 </td>
+                @if (Auth::guard('admin')->user()->can('company.edit') || Auth::guard('admin')->user()->can('company.delete'))
                 <td class="table-report__action">
                     <div class="flex justify-center items-center">
+                        @if (Auth::guard('admin')->user()->can('company.edit'))
                         <a class="flex items-center mr-3 text-theme-1" href="{{ route('dashboard.companies.edit', $company->id) }}" title="Edit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square w-4 h-4 mr-1">
                                 <polyline points="9 11 12 14 22 4"></polyline>
@@ -102,6 +108,8 @@
                             </svg>
                             <span class="hidden sm:inline">Edit</span>
                         </a>
+                        @endif
+                        @if (Auth::guard('admin')->user()->can('company.delete'))
                         <a class="flex items-center text-theme-6" href="{{ route('dashboard.companies.destroy', $company->id) }}" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $company->id }}').submit()" title="Delete">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 w-4 h-4 mr-1">
                                 <polyline points="3 6 5 6 21 6"></polyline>
@@ -115,12 +123,14 @@
                             @method('DELETE')
                             @csrf
                         </form>
+                        @endif
                     </div>
                 </td>
+                @endif
             </tr>
             @empty
             <tr>
-                <td colspan="3" class="text-center py-8">
+                <td colspan="{{ Auth::guard('admin')->user()->can('company.edit') || Auth::guard('admin')->user()->can('company.delete') ? 3 : 2 }}" class="text-center py-8">
                     <div class="flex flex-col items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-inbox text-gray-400 mb-3">
                             <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>

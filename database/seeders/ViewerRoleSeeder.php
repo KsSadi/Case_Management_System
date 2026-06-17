@@ -23,9 +23,7 @@ class ViewerRoleSeeder extends Seeder
         // 2. Fetch all view/report permissions
         $viewPermissions = [
             'dashboard.view',
-            'admin.view',
             'user.view',
-            'role.view',
             'branch.view',
             'route.view',
             'type.view',
@@ -43,10 +41,10 @@ class ViewerRoleSeeder extends Seeder
 
         foreach ($viewPermissions as $permName) {
             // Find or create permission
-            $permission = Permission::firstOrCreate(['name' => $permName, 'guard_name' => 'admin']);
-            // Sync/give permission to the viewer role
-            $role->givePermissionTo($permission);
+            Permission::firstOrCreate(['name' => $permName, 'guard_name' => 'admin']);
         }
+        // Sync permission to the viewer role
+        $role->syncPermissions($viewPermissions);
 
         // 3. Create a default viewer user if it doesn't exist
         $email = 'viewer@prathomik.com';
