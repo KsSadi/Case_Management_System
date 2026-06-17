@@ -17,6 +17,7 @@
             Back to Current Histories
         </a>
         
+        @if (Auth::guard('admin')->user()->can('history.create'))
         <a href="{{ route('dashboard.histories.create') }}" style="max-width: 220px" class="button w-100 mr-2 flex bg-theme-1 text-white"> 
             <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle mx-auto">
                 <circle cx="12" cy="12" r="10"></circle>
@@ -24,6 +25,7 @@
                 <line x1="8" y1="12" x2="16" y2="12"></line>
             </svg> Add New Case History 
         </a>
+        @endif
     </div>
 
     <div class="intro-y box p-3 md:p-5 mt-5 mb-3">
@@ -51,7 +53,9 @@
                     <th class="whitespace-no-wrap hidden xl:table-cell">বিচারাধীন বিজ্ঞ আদালতের নাম</th>
                     <th class="whitespace-no-wrap hidden md:table-cell">নিয়োজিত আইনজীবীর নাম</th>
                     <th class="whitespace-no-wrap">পরবর্তী তারিখ (Expired)</th>
+                    @if (Auth::guard('admin')->user()->can('history.edit') || Auth::guard('admin')->user()->can('history.delete'))
                     <th class="text-center whitespace-no-wrap">ACTIONS</th>
+                    @endif
 
             </tr>
             </thead>
@@ -123,15 +127,19 @@
                     </td>
 
 
+                    @if (Auth::guard('admin')->user()->can('history.edit') || Auth::guard('admin')->user()->can('history.delete'))
                     <td class="table-report__action w-56">
                         <div class="flex justify-center items-center">
+                            @if (Auth::guard('admin')->user()->can('history.edit'))
                             <a class="flex items-center mr-3" href="{{ route('dashboard.histories.edit', $history->id) }}"> 
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square w-4 h-4 mr-1">
                                     <polyline points="9 11 12 14 22 4"></polyline>
                                     <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
                                 </svg> Edit 
                             </a>
+                            @endif
 
+                            @if (Auth::guard('admin')->user()->can('history.delete'))
                             <a class="flex items-center text-theme-6" href="{{ route('dashboard.histories.destroy', $history->id) }}" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $history->id }}').submit()"> 
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 w-4 h-4 mr-1">
                                     <polyline points="3 6 5 6 21 6"></polyline>
@@ -144,8 +152,10 @@
                                 @method('DELETE')
                                 @csrf
                             </form>
+                            @endif
                         </div>
                     </td>
+                    @endif
                 </tr>
 
             @empty
