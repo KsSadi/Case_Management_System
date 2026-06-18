@@ -1,6 +1,22 @@
 <div class="top-bar">
-    <!-- BEGIN: Breadcrumb -->
-    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="" class="">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">Dashboard</a> </div>
+    <!-- BEGIN: Breadcrumb & Back Button -->
+    <div class="-intro-x flex items-center mr-auto">
+        @if(!request()->routeIs('dashboard'))
+            <a href="javascript:void(0);" onclick="goBack()" class="button bg-gray-200 text-gray-700 mr-3 flex items-center no-print hover:bg-gray-300 transition-all duration-200 ease-in-out transform hover:-translate-x-0.5 shadow-xs border border-gray-300" style="padding: 0.35rem 0.75rem; font-size: 0.75rem; border-radius: 0.375rem;">
+                <i data-feather="arrow-left" class="w-3.5 h-3.5 mr-1.5"></i> ফিরে যান (Back)
+            </a>
+            <script>
+                function goBack() {
+                    if (window.history.length > 1) {
+                        window.history.back();
+                    } else {
+                        window.location.href = "{{ route('dashboard') }}";
+                    }
+                }
+            </script>
+        @endif
+        <div class="breadcrumb hidden sm:flex"> <a href="{{ route('dashboard') }}" class="">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">Dashboard</a> </div>
+    </div>
 
     <!-- BEGIN: Notifications -->
     <div class="intro-x dropdown relative mr-auto sm:mr-6">
