@@ -65,9 +65,54 @@
         </form>
     </div>
 
-    <div class="intro-y datatable-wrapper box p-3 md:p-5 mt-2" style="overflow: visible;">
+    <div class="intro-y datatable-wrapper box p-3 md:p-5 mt-2" id="print-section" style="overflow: visible;">
+        
+        <!-- Print Header (only visible when printing) -->
+        <div id="print-header" style="display:none;">
+            <div style="text-align:center; border-bottom: 2px solid #333; padding-bottom: 12px; margin-bottom: 14px;">
+                <h1 style="font-size: 20px; font-weight: bold; margin: 0 0 4px 0;">নিষ্পত্তি মামলার তালিকা</h1>
+                <h2 style="font-size: 14px; font-weight: normal; color: #444; margin: 0 0 6px 0;">Resolved Cases List</h2>
+                <p style="font-size: 11px; color: #666; margin: 0;">মুদ্রণের তারিখ: <span id="print-date"></span> &nbsp;|&nbsp; মোট রেকর্ড: <strong>{{ count($histories) }}</strong></p>
+            </div>
+            @if(request('year') || request('month'))
+            <div style="margin-bottom: 12px; padding: 8px 12px; background: #f5f5f5; border-left: 4px solid #333; font-size: 11px;">
+                @if(request('year'))
+                <span style="display:inline-block; margin-right:16px;">
+                    <span style="color:#555;">বছর:</span>
+                    <strong>{{ request('year') }}</strong>
+                </span>
+                @endif
+                @if(request('month'))
+                <span style="display:inline-block; margin-right:16px;">
+                    <span style="color:#555;">মাস:</span>
+                    <strong>
+                        @php
+                            $months_bn = [1 => 'জানুয়ারি', 2 => 'ফেব্রুয়ারি', 3 => 'মার্চ', 4 => 'এপ্রিল', 5 => 'মে', 6 => 'জুন', 7 => 'জুলাই', 8 => 'আগস্ট', 9 => 'সেপ্টেম্বর', 10 => 'অক্টোবর', 11 => 'নভেম্বর', 12 => 'ডিসেম্বর'];
+                        @endphp
+                        {{ $months_bn[request('month')] ?? '' }}
+                    </strong>
+                </span>
+                @endif
+            </div>
+            @endif
+        </div>
+
+        <!-- Print Button -->
+        @if(count($histories) > 0)
+        <div class="flex justify-end mb-3 no-print">
+            <button onclick="printNispottiTable()" class="button flex items-center bg-gray-700 text-white">
+                <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                    <rect x="6" y="14" width="12" height="8"></rect>
+                </svg>
+                প্রিন্ট করুন ({{ count($histories) }} টি রেকর্ড)
+            </button>
+        </div>
+        @endif
+
         <div class="overflow-x-auto" style="width: 100%; overflow-x: auto;">
-            <table class="table table-report table-report--bordered display datatable w-full" style="min-width: 600px;">
+            <table class="table table-report table-report--bordered display datatable w-full" id="result-table" style="min-width: 600px;">
                 <thead>
                 <tr>
                     <th class="whitespace-no-wrap">ক্রঃ নং</th>
@@ -79,7 +124,7 @@
                     <th class="whitespace-no-wrap hidden md:table-cell">নিয়োজিত আইনজীবীর নাম</th>
                     <th class="whitespace-no-wrap">নিষ্পত্তির তারিখ</th>
                     @if (Auth::guard('admin')->user()->can('history.edit') || Auth::guard('admin')->user()->can('history.delete'))
-                    <th class="text-center whitespace-no-wrap">ACTIONS</th>
+                    <th class="text-center whitespace-no-wrap no-print">ACTIONS</th>
                     @endif
                 </tr>
                 </thead>
@@ -120,7 +165,7 @@
                             @endif
                         </td>
                         @if (Auth::guard('admin')->user()->can('history.edit') || Auth::guard('admin')->user()->can('history.delete'))
-                        <td class="table-report__action w-56">
+                        <td class="table-report__action w-56 no-print">
                             <div class="flex justify-center items-center">
                                 @if (Auth::guard('admin')->user()->can('history.edit'))
                                 <a class="flex items-center mr-3" href="{{ route('dashboard.histories.edit', $history->id) }}">
@@ -154,5 +199,92 @@
             </table>
         </div>
     </div>
+
+<style>
+@media print {
+    /* Hide everything */
+    body * { visibility: hidden; }
+
+    /* Show only print section */
+    #print-section, #print-section * { visibility: visible; }
+
+    /* Reset layout wrappers to static block flow so they don't occupy space/margins */
+    .app, .flex, .content {
+        position: static !important;
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
+    #print-section {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    /* Show print header */
+    #print-header { display: block !important; }
+
+    /* Hide non-print elements */
+    .no-print { display: none !important; }
+
+    /* Hide DataTable controls */
+    .dataTables_length,
+    .dataTables_filter,
+    .dataTables_info,
+    .dataTables_paginate,
+    .dataTables_wrapper .row:first-child,
+    .dataTables_wrapper .row:last-child { display: none !important; }
+
+    /* Table styling for print */
+    #result-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    #result-table th, #result-table td {
+        border: 1px solid #333;
+        padding: 5px 8px;
+        text-align: left;
+        word-break: break-word;
+        display: table-cell !important;
+    }
+    #result-table thead tr { background-color: #f0f0f0 !important; -webkit-print-color-adjust: exact; }
+    #result-table tbody tr:nth-child(even) { background-color: #fafafa !important; -webkit-print-color-adjust: exact; }
+
+    @page { margin: 15mm; size: A4 landscape; }
+}
+</style>
+
+<script>
+function printNispottiTable() {
+    var printDateEl = document.getElementById('print-date');
+    if (printDateEl) {
+        printDateEl.textContent = new Date().toLocaleDateString('bn-BD', {
+            year: 'numeric', month: 'long', day: 'numeric'
+        });
+    }
+
+    var hasDataTable = $.fn.dataTable && $.fn.dataTable.isDataTable('#result-table');
+
+    if (hasDataTable) {
+        var table = $('#result-table').DataTable();
+        var prevLen = table.page.len();
+        table.page.len(-1).draw();
+
+        setTimeout(function () {
+            window.print();
+            table.page.len(prevLen).draw();
+        }, 400);
+    } else {
+        setTimeout(function () {
+            window.print();
+        }, 200);
+    }
+}
+</script>
 
 @endsection

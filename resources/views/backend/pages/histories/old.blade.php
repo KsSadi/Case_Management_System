@@ -39,10 +39,34 @@
         <p class="text-gray-600 mt-2">এই মামলাগুলোর পরবর্তী তারিখ পার হয়ে গেছে। আপনি এখানে তারিখ আপডেট করতে পারবেন।</p>
     </div>
 
-    <div class="intro-y datatable-wrapper box p-3 md:p-5 mt-5" style="overflow: visible;">
+    <div class="intro-y datatable-wrapper box p-3 md:p-5 mt-5" id="print-section" style="overflow: visible;">
+        
+        <!-- Print Header (only visible when printing) -->
+        <div id="print-header" style="display:none;">
+            <div style="text-align:center; border-bottom: 2px solid #333; padding-bottom: 12px; margin-bottom: 14px;">
+                <h1 style="font-size: 20px; font-weight: bold; margin: 0 0 4px 0;">পুরানো মামলার ইতিহাস</h1>
+                <h2 style="font-size: 14px; font-weight: normal; color: #444; margin: 0 0 6px 0;">Old Case Histories</h2>
+                <p style="font-size: 11px; color: #666; margin: 0;">মুদ্রণের তারিখ: <span id="print-date"></span> &nbsp;|&nbsp; মোট রেকর্ড: <strong>{{ count($histories) }}</strong></p>
+            </div>
+        </div>
+
+        <!-- Print Button -->
+        @if(count($histories) > 0)
+        <div class="flex justify-end mb-3 no-print">
+            <button onclick="printOldTable()" class="button flex items-center bg-gray-700 text-white">
+                <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                    <rect x="6" y="14" width="12" height="8"></rect>
+                </svg>
+                প্রিন্ট করুন ({{ count($histories) }} টি রেকর্ড)
+            </button>
+        </div>
+        @endif
+
         <!-- Mobile Responsive: Horizontal scroll wrapper -->
         <div class="overflow-x-auto" style="width: 100%; overflow-x: auto;">
-            <table class="table table-report table-report--bordered display datatable w-full" style="min-width: 600px;">
+            <table class="table table-report table-report--bordered display datatable w-full" id="result-table" style="min-width: 600px;">
                 <thead>
                 <tr>
                     <th class="whitespace-no-wrap">ক্রঃ নং</th>
@@ -54,7 +78,7 @@
                     <th class="whitespace-no-wrap hidden md:table-cell">নিয়োজিত আইনজীবীর নাম</th>
                     <th class="whitespace-no-wrap">পরবর্তী তারিখ (Expired)</th>
                     @if (Auth::guard('admin')->user()->can('history.edit') || Auth::guard('admin')->user()->can('history.delete'))
-                    <th class="text-center whitespace-no-wrap">ACTIONS</th>
+                    <th class="text-center whitespace-no-wrap no-print">ACTIONS</th>
                     @endif
 
             </tr>
@@ -128,7 +152,7 @@
 
 
                     @if (Auth::guard('admin')->user()->can('history.edit') || Auth::guard('admin')->user()->can('history.delete'))
-                    <td class="table-report__action w-56">
+                    <td class="table-report__action w-56 no-print">
                         <div class="flex justify-center items-center">
                             @if (Auth::guard('admin')->user()->can('history.edit'))
                             <a class="flex items-center mr-3" href="{{ route('dashboard.histories.edit', $history->id) }}"> 
@@ -179,7 +203,91 @@
     </div>
     <!-- END: Datatable -->
 
+<style>
+@media print {
+    /* Hide everything */
+    body * { visibility: hidden; }
 
+    /* Show only print section */
+    #print-section, #print-section * { visibility: visible; }
 
+    /* Reset layout wrappers to static block flow so they don't occupy space/margins */
+    .app, .flex, .content {
+        position: static !important;
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
+    #print-section {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    /* Show print header */
+    #print-header { display: block !important; }
+
+    /* Hide non-print elements */
+    .no-print { display: none !important; }
+
+    /* Hide DataTable controls */
+    .dataTables_length,
+    .dataTables_filter,
+    .dataTables_info,
+    .dataTables_paginate,
+    .dataTables_wrapper .row:first-child,
+    .dataTables_wrapper .row:last-child { display: none !important; }
+
+    /* Table styling for print */
+    #result-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    #result-table th, #result-table td {
+        border: 1px solid #333;
+        padding: 5px 8px;
+        text-align: left;
+        word-break: break-word;
+        display: table-cell !important;
+    }
+    #result-table thead tr { background-color: #f0f0f0 !important; -webkit-print-color-adjust: exact; }
+    #result-table tbody tr:nth-child(even) { background-color: #fafafa !important; -webkit-print-color-adjust: exact; }
+
+    @page { margin: 15mm; size: A4 landscape; }
+}
+</style>
+
+<script>
+function printOldTable() {
+    var printDateEl = document.getElementById('print-date');
+    if (printDateEl) {
+        printDateEl.textContent = new Date().toLocaleDateString('bn-BD', {
+            year: 'numeric', month: 'long', day: 'numeric'
+        });
+    }
+
+    var hasDataTable = $.fn.dataTable && $.fn.dataTable.isDataTable('#result-table');
+
+    if (hasDataTable) {
+        var table = $('#result-table').DataTable();
+        var prevLen = table.page.len();
+        table.page.len(-1).draw();
+
+        setTimeout(function () {
+            window.print();
+            table.page.len(prevLen).draw();
+        }, 400);
+    } else {
+        setTimeout(function () {
+            window.print();
+        }, 200);
+    }
+}
+</script>
 
 @endsection
