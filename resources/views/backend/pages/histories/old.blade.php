@@ -76,6 +76,7 @@
                     <th class="whitespace-no-wrap hidden lg:table-cell">মামলার ধরন</th>
                     <th class="whitespace-no-wrap hidden xl:table-cell">বিচারাধীন বিজ্ঞ আদালতের নাম</th>
                     <th class="whitespace-no-wrap hidden md:table-cell">নিয়োজিত আইনজীবীর নাম</th>
+                    <th class="whitespace-no-wrap hidden md:table-cell">নির্ধারিত কার্যক্রম</th>
                     <th class="whitespace-no-wrap">ধার্য তারিখ (Expired)</th>
                     @if (Auth::guard('admin')->user()->can('history.edit') || Auth::guard('admin')->user()->can('history.delete'))
                     <th class="text-center whitespace-no-wrap no-print">ACTIONS</th>
@@ -144,6 +145,9 @@
                                 Not Found
                             @endif </span>
 
+                    </td>
+                    <td class="hidden md:table-cell">
+                        <span class="font-medium">{{ $history->status ?? '—' }}</span>
                     </td>
                     <td data-order="{{ $history->next_date ?? '' }}">
                         <span class="font-medium text-theme-6">{{ \Carbon\Carbon::parse($history->next_date)->format('d M Y') }}</span>

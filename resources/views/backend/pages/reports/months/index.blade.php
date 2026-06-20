@@ -92,6 +92,7 @@
                 <th class="whitespace-no-wrap">আদালতের নাম</th>
                 <th class="whitespace-no-wrap">আইনজীবীর নাম</th>
                 <th class="whitespace-no-wrap">পক্ষদের নাম</th>
+                <th class="whitespace-no-wrap">নির্ধারিত কার্যক্রম</th>
                 <th class="whitespace-no-wrap">ধার্য তারিখ </th>
                 @if (Auth::guard('admin')->user()->can('history.edit') || Auth::guard('admin')->user()->can('history.delete'))
                 <th class="text-center whitespace-no-wrap no-print">ACTIONS</th>
@@ -139,6 +140,9 @@
                     </td>
                     <td>
                         <span class="font-medium">{{ optional($history->cases)->parties_name ?? '—' }}</span>
+                    </td>
+                    <td>
+                        <span class="font-medium">{{ $history->status ?? '—' }}</span>
                     </td>
                     <td data-order="{{ $history->next_date ?? '' }}">
                         <span href="" class="font-medium no-print">{{ $history->next_date ? \Carbon\Carbon::parse($history->next_date)->format('d M Y') : '' }}</span>

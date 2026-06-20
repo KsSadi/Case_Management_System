@@ -50,6 +50,7 @@
                     <th class="whitespace-no-wrap hidden xl:table-cell">আদালতের নাম</th>
                     <th class="whitespace-no-wrap hidden md:table-cell">আইনজীবীর নাম</th>
                     <th class="whitespace-no-wrap hidden md:table-cell">পক্ষদের নাম</th>
+                    <th class="whitespace-no-wrap hidden md:table-cell">নির্ধারিত কার্যক্রম</th>
                     <th class="whitespace-no-wrap">ধার্য তারিখ</th>
                     @if (Auth::guard('admin')->user()->can('history.edit') || Auth::guard('admin')->user()->can('history.delete'))
                     <th class="text-center whitespace-no-wrap">ACTIONS</th>
@@ -104,6 +105,9 @@
                     </td>
                     <td class="hidden md:table-cell">
                         <span class="font-medium">{{ $history->cases?->parties_name ?? '—' }}</span>
+                    </td>
+                    <td class="hidden md:table-cell">
+                        <span class="font-medium">{{ $history->status ?? '—' }}</span>
                     </td>
                     <td data-order="{{ $isNispotti ? ($history->nispotti_date ?? '') : ($history->next_date ?? '') }}">
                         @if($isNispotti)
