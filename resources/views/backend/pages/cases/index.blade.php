@@ -29,7 +29,7 @@
                     <th class="whitespace-no-wrap hidden lg:table-cell">মামলার ধরন</th>
                     <th class="whitespace-no-wrap hidden xl:table-cell">আদালতের নাম</th>
                     <th class="whitespace-no-wrap hidden md:table-cell">আইনজীবীর নাম</th>
-                    <th class="hidden md:table-cell">কোম্পানির নাম</th>
+                    <th class="hidden md:table-cell">পক্ষদের নাম</th>
                     @if (Auth::guard('admin')->user()->can('case.edit') || Auth::guard('admin')->user()->can('case.delete'))
                     <th class="text-center whitespace-no-wrap">ACTIONS</th>
                     @endif
@@ -89,7 +89,7 @@
                             @endif </span>
                     </td>
                     <td class="hidden md:table-cell">
-                        <span class="font-medium">{{ $case->companies?->name ?? '—' }}</span>
+                        <span class="font-medium">{{ $case->parties_name ?? '—' }}</span>
                     </td>
 
 

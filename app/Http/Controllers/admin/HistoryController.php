@@ -31,7 +31,7 @@ class HistoryController extends Controller
             abort(403, 'Unauthorized Access!');
         }
         // Get all histories, ordered by next_date (oldest expired first, then upcoming)
-        $histories = History::with('cases:id,case_no,division,project,case_type,court_name,adv_name,company_id')
+        $histories = History::with('cases:id,case_no,division,project,case_type,court_name,adv_name,company_id,parties_name')
                             ->select('id', 'case_id', 'date', 'past_date', 'next_date', 'status', 'is_nispotti')
                             ->orderBy('next_date', 'asc')
                             ->get();
@@ -49,7 +49,7 @@ class HistoryController extends Controller
             abort(403, 'Unauthorized Access!');
         }
 
-        $query = History::with('cases:id,case_no,division,project,case_type,court_name,adv_name')
+        $query = History::with('cases:id,case_no,division,project,case_type,court_name,adv_name,parties_name')
                         ->select('id', 'case_id', 'date', 'past_date', 'next_date', 'status', 'is_nispotti', 'nispotti_date')
                         ->where('is_nispotti', true);
 
@@ -79,7 +79,7 @@ class HistoryController extends Controller
             abort(403, 'Unauthorized Access!');
         }
         // Get old/expired histories (next_date < today)
-        $histories = History::with('cases:id,case_no,division,project,case_type,court_name,adv_name')
+        $histories = History::with('cases:id,case_no,division,project,case_type,court_name,adv_name,parties_name')
                             ->select('id', 'case_id', 'date', 'past_date', 'next_date', 'status', 'is_nispotti')
                             ->where('is_nispotti', false)
                             ->whereDate('next_date', '<', now()->toDateString())

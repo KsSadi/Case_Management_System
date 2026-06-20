@@ -36,7 +36,7 @@
             </svg>
             <h2 class="text-lg font-medium">পুরানো মামলার ইতিহাস (Old Case Histories)</h2>
         </div>
-        <p class="text-gray-600 mt-2">এই মামলাগুলোর পরবর্তী তারিখ পার হয়ে গেছে। আপনি এখানে তারিখ আপডেট করতে পারবেন।</p>
+        <p class="text-gray-600 mt-2">এই মামলাগুলোর ধার্য তারিখ পার হয়ে গেছে। আপনি এখানে তারিখ আপডেট করতে পারবেন।</p>
     </div>
 
     <div class="intro-y datatable-wrapper box p-3 md:p-5 mt-5" id="print-section" style="overflow: visible;">
@@ -76,7 +76,7 @@
                     <th class="whitespace-no-wrap hidden lg:table-cell">মামলার ধরন</th>
                     <th class="whitespace-no-wrap hidden xl:table-cell">বিচারাধীন বিজ্ঞ আদালতের নাম</th>
                     <th class="whitespace-no-wrap hidden md:table-cell">নিয়োজিত আইনজীবীর নাম</th>
-                    <th class="whitespace-no-wrap">পরবর্তী তারিখ (Expired)</th>
+                    <th class="whitespace-no-wrap">ধার্য তারিখ (Expired)</th>
                     @if (Auth::guard('admin')->user()->can('history.edit') || Auth::guard('admin')->user()->can('history.delete'))
                     <th class="text-center whitespace-no-wrap no-print">ACTIONS</th>
                     @endif

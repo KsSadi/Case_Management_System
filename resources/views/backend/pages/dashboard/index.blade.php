@@ -204,7 +204,7 @@
 {{--                            <th class="whitespace-no-wrap">মামলার ধরন</th>--}}
 {{--                            <th class="whitespace-no-wrap">বিচারাধীন বিজ্ঞ আদালতের নাম</th>--}}
                             <th class="whitespace-no-wrap">নিয়োজিত আইনজীবীর নাম</th>
-                            <th class="whitespace-no-wrap">পরবর্তী তারিখ </th>
+                            <th class="whitespace-no-wrap">ধার্য তারিখ </th>
 {{--                            <th class="text-center whitespace-no-wrap">ACTIONS</th>--}}
 
                         </tr>

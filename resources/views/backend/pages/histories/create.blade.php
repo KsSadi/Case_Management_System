@@ -81,11 +81,11 @@
                             <input type="date" id="past_date"  @if(isset($history))value="{{$history->past_date}}" @endif name="past_date" class="input w-full border mt-2" placeholder="">
                         </div>
                         <div class="mt-3">
-                            <label class="flex flex-col sm:flex-row"> পরবর্তী তারিখ  </label>
+                            <label class="flex flex-col sm:flex-row"> ধার্য তারিখ  </label>
                             <input type="date" id="next_date"  @if(isset($history))value="{{$history->next_date}}" @endif name="next_date" class="input w-full border mt-2" placeholder="">
                         </div>
                         <div class="mt-3">
-                            <label class="flex flex-col sm:flex-row"> বর্তমান অবস্থা/করণীয়/মন্তব্য </label>
+                            <label class="flex flex-col sm:flex-row"> নির্ধারিত কার্যক্রম </label>
                             <input type="text" id="status"   @if(isset($history))value="{{$history->status}}" @endif  name="status" class="input w-full border mt-2" placeholder="">
                         </div>                        <div class="mt-4 flex items-center">
                             <input type="checkbox" id="is_nispotti" name="is_nispotti" value="1"

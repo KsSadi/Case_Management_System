@@ -178,8 +178,8 @@ Case Filtering
                 <th class="whitespace-no-wrap">মামলার ধরন</th>
                 <th class="whitespace-no-wrap">আদালতের নাম</th>
                 <th class="whitespace-no-wrap">আইনজীবীর নাম</th>
-                <th class="whitespace-no-wrap">কোম্পানির নাম</th>
-                <th class="whitespace-no-wrap">পরবর্তী তারিখ </th>
+                <th class="whitespace-no-wrap">পক্ষদের নাম</th>
+                <th class="whitespace-no-wrap">ধার্য তারিখ </th>
                 @if (Auth::guard('admin')->user()->can('history.edit') || Auth::guard('admin')->user()->can('history.delete'))
                 <th class="text-center whitespace-no-wrap no-print">ACTIONS</th>
                 @endif
@@ -229,7 +229,7 @@ Case Filtering
 
                     </td>
                     <td>
-                        <span class="font-medium">{{ $history->cases?->companies?->name ?? '—' }}</span>
+                        <span class="font-medium">{{ $history->cases?->parties_name ?? '—' }}</span>
                     </td>
                     <td data-order="{{ $history->is_nispotti ? ($history->nispotti_date ?? '') : ($history->next_date ?? '') }}">
                         @if($history->is_nispotti)

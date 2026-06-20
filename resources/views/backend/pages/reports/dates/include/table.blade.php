@@ -49,8 +49,8 @@
             <th class="whitespace-no-wrap">মামলার ধরন</th>
             <th class="whitespace-no-wrap">আদালতের নাম</th>
             <th class="whitespace-no-wrap">আইনজীবীর নাম</th>
-            <th class="whitespace-no-wrap">কোম্পানির নাম</th>
-            <th class="whitespace-no-wrap">পরবর্তী তারিখ</th>
+            <th class="whitespace-no-wrap">পক্ষদের নাম</th>
+            <th class="whitespace-no-wrap">ধার্য তারিখ</th>
             @if (Auth::guard('admin')->user()->can('history.edit') || Auth::guard('admin')->user()->can('history.delete'))
             <th class="text-center whitespace-no-wrap no-print">ACTIONS</th>
             @endif
@@ -120,8 +120,7 @@
 
                 </td>
                 <td>
-                    <span class="font-medium">{{ optional(optional($historydate->cases)->companies)->name ?? '—' }}</span>
-
+                    <span class="font-medium">{{ optional($historydate->cases)->parties_name ?? '—' }}</span>
                 </td>
                 <td data-order="{{ $historydate->next_date ?? '' }}">
                     <span href="" class="font-medium no-print">{{ $historydate->next_date ? \Carbon\Carbon::parse($historydate->next_date)->format('d M Y') : '' }}</span>

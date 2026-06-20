@@ -49,8 +49,8 @@
                     <th class="whitespace-no-wrap hidden lg:table-cell">মামলার ধরন</th>
                     <th class="whitespace-no-wrap hidden xl:table-cell">আদালতের নাম</th>
                     <th class="whitespace-no-wrap hidden md:table-cell">আইনজীবীর নাম</th>
-                    <th class="whitespace-no-wrap hidden md:table-cell">কোম্পানির নাম</th>
-                    <th class="whitespace-no-wrap">পরবর্তী তারিখ</th>
+                    <th class="whitespace-no-wrap hidden md:table-cell">পক্ষদের নাম</th>
+                    <th class="whitespace-no-wrap">ধার্য তারিখ</th>
                     @if (Auth::guard('admin')->user()->can('history.edit') || Auth::guard('admin')->user()->can('history.delete'))
                     <th class="text-center whitespace-no-wrap">ACTIONS</th>
                     @endif
@@ -103,7 +103,7 @@
 
                     </td>
                     <td class="hidden md:table-cell">
-                        <span class="font-medium">{{ $history->cases?->companies?->name ?? '—' }}</span>
+                        <span class="font-medium">{{ $history->cases?->parties_name ?? '—' }}</span>
                     </td>
                     <td data-order="{{ $isNispotti ? ($history->nispotti_date ?? '') : ($history->next_date ?? '') }}">
                         @if($isNispotti)

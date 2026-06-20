@@ -104,13 +104,12 @@
                             <td class="border">{{ \Carbon\Carbon::parse($history->past_date)->format('d M Y') }}</td>
                         </tr>
                         <tr>
-
-                            <th class="border">পরবর্তী তারিখ </th>
+                            <th class="border">ধার্য তারিখ </th>
                             <td class="border">{{ \Carbon\Carbon::parse($history->next_date)->format('d M Y') }}</td>
                         </tr>
                         <tr>
 
-                            <th class="border">বর্তমান অবস্থা/করণীয়/মন্তব্য </th>
+                            <th class="border">নির্ধারিত কার্যক্রম </th>
                             <td class="border">{{ $history->status }}</td>
                         </tr>
 
