@@ -62,6 +62,18 @@ class DashboardController extends Controller
             $nextdaysFrom = Carbon::today()->addDays(2);
             $nextdaysTo = $nextdaysFrom->copy()->addDays(6);
 
+            // Group upcoming cases per day for the 7 individual day sections
+            $groupedNextdays = $nextdays->groupBy(function ($item) {
+                return Carbon::parse($item->next_date)->format('Y-m-d');
+            });
+            $nextdaysByDay = collect(range(0, 6))->map(function ($i) use ($nextdaysFrom, $groupedNextdays) {
+                $date = $nextdaysFrom->copy()->addDays($i);
+                return [
+                    'date' => $date,
+                    'cases' => $groupedNextdays->get($date->format('Y-m-d'), collect()),
+                ];
+            });
+
             // Today's cases (cached for 5 minutes)
             $todayCacheKey = 'today_cases_' . date('Y-m-d');
             $todayCases = Cache::remember($todayCacheKey, 300, function() {
@@ -88,6 +100,7 @@ class DashboardController extends Controller
                 'nextdays',
                 'nextdaysFrom',
                 'nextdaysTo',
+                'nextdaysByDay',
                 'todayCases',
                 'tomorrowCases'
             ) + $stats);
