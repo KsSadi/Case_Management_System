@@ -215,7 +215,7 @@
                                         </thead>
                                         <tbody>
                                             @forelse($day['cases'] as $nextday)
-                                                <tr>
+                                                <tr style="{{ $loop->last ? '' : 'border-bottom:1px dashed #cbd5e1;' }}">
                                                     <td style="width:48px;text-align:center;">
                                                         <span style="display:inline-block;min-width:26px;padding:2px 7px;background:{{ $color }};color:#fff;border-radius:12px;font-size:12px;font-weight:700;">{{ $loop->iteration }}</span>
                                                     </td>
