@@ -90,7 +90,7 @@
                                 আজকের মামলা
                             </h2>
                             <span class="rounded px-2 py-1 text-white text-sm font-bold" style="background:#0d6efd;">{{ $todayCases->count() }}</span>
-                            <span class="ml-2 text-gray-500 text-sm">{{ \Carbon\Carbon::today()->format('d M Y') }}</span>
+                            <span class="ml-2 text-gray-500 text-sm">{{ \Carbon\Carbon::today()->format('d F Y') }}</span>
                         </div>
                         <div class="intro-y box p-3 md:p-4" style="overflow:visible;">
                             <div class="overflow-x-auto">
@@ -137,7 +137,7 @@
                                 আগামীকালের মামলা
                             </h2>
                             <span class="rounded px-2 py-1 text-white text-sm font-bold" style="background:#fd7e14;">{{ $tomorrowCases->count() }}</span>
-                            <span class="ml-2 text-gray-500 text-sm">{{ \Carbon\Carbon::tomorrow()->format('d M Y') }}</span>
+                            <span class="ml-2 text-gray-500 text-sm">{{ \Carbon\Carbon::tomorrow()->format('d F Y') }}</span>
                         </div>
                         <div class="intro-y box p-3 md:p-4" style="overflow:visible;">
                             <div class="overflow-x-auto">
@@ -187,7 +187,8 @@
                        Up Comming Case -  <span class="rounded" style="background:mediumvioletred;color: #F1F5F8;padding: 5px;">{{$nextdays->count()}}</span>
                     </h2>
 
-                   <i data-feather="refresh-ccw" class="w-4 h-4 mr-3"></i> Next 7 Days
+                   <i data-feather="refresh-ccw" class="w-4 h-4 mr-3"></i>
+                   {{ $nextdaysFrom->format('d F Y') }} - {{ $nextdaysTo->format('d F Y') }}
                 </div>
 
                 <div class="intro-y datatable-wrapper box p-3 md:p-5 mt-5" style="overflow: visible;">

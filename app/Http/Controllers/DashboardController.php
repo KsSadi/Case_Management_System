@@ -52,13 +52,15 @@ class DashboardController extends Controller
             // Upcoming cases in next 7 days (cached for 15 minutes)
             $nextdaysCacheKey = 'upcoming_cases_' . date('Y-m-d-H');
             $nextdays = Cache::remember($nextdaysCacheKey, 900, function() {
-                $from = Carbon::now();
-                $to = Carbon::now()->addDays(7)->toDateString();
+                $from = Carbon::today()->addDays(2)->startOfDay();
+                $to = $from->copy()->addDays(6)->endOfDay();
                 return History::whereBetween('next_date', [$from, $to])
                               ->with(['cases.advocates', 'cases.projects', 'cases.divisions', 'cases.types', 'cases.courts'])
                               ->orderBy('next_date', 'asc')
                               ->get();
             });
+            $nextdaysFrom = Carbon::today()->addDays(2);
+            $nextdaysTo = $nextdaysFrom->copy()->addDays(6);
 
             // Today's cases (cached for 5 minutes)
             $todayCacheKey = 'today_cases_' . date('Y-m-d');
@@ -84,6 +86,8 @@ class DashboardController extends Controller
             return view('backend.pages.dashboard.index', compact(
                 'month_name',
                 'nextdays',
+                'nextdaysFrom',
+                'nextdaysTo',
                 'todayCases',
                 'tomorrowCases'
             ) + $stats);
