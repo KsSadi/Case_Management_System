@@ -195,7 +195,7 @@
                 <div class="grid grid-cols-12 gap-6 mt-5">
                     @foreach($nextdaysByDay as $day)
                         @php $color = ['#0d6efd', '#fd7e14', '#198754', '#6f42c1', '#d63384', '#20c997', '#dc3545'][$loop->index % 7]; @endphp
-                        <div class="col-span-12 lg:col-span-6 xl:col-span-4">
+                        <div class="col-span-12">
                             <div class="intro-y flex items-center h-10 mb-3">
                                 <h2 class="text-lg font-medium truncate mr-3">
                                     {{ $day['date']->translatedFormat('l') }}
