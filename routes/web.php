@@ -44,7 +44,7 @@ Route::get('/dashboard_old', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard_old');
 
-Route::group(['prefix' => 'dashboard'], function () {
+Route::group(['prefix' => 'dashboard', 'middleware' => [\App\Http\Middleware\BlockViewerRole::class]], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('roles', RolesController::class)->names('dashboard.roles');
     Route::resource('users', UsersController::class)->names('dashboard.users');
